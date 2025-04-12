@@ -1,0 +1,42 @@
+* {
+  font-family: 'Courier New', Courier, monospace;
+  transition: all 0.1s linear;
+}
+
+.rootUI {
+  --border-color: #444;
+
+  display: grid;
+
+  padding: 0px;
+  margin: 0px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  grid-template-columns: 40px 4fr 320px;
+  grid-template-rows: 1fr 0px;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+  & > canvas {
+    grid-area: 1 / 2 / 2 / 3;
+    border-left: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* .div1 {
+}
+.div2 {
+  grid-area: 1 / 1 / 3 / 2;
+}
+.div3 {
+  grid-area: 1 / 3 / 3 / 4;
+}
+.div4 {
+  grid-area: 2 / 2 / 3 / 3;
+} */
