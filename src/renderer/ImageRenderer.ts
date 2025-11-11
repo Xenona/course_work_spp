@@ -1,5 +1,4 @@
 import type { BoardImage } from '@/model/board/objects/BoardImage'
-import type { BoardDrawing } from '../model/board/objects/BoardDrawing'
 import { ObjectRenderer } from './ObjectRenderer'
 
 export class ImageRenderer extends ObjectRenderer<BoardImage> {
@@ -16,15 +15,12 @@ export class ImageRenderer extends ObjectRenderer<BoardImage> {
       console.log(s, this.img.src)
       this.img.src = s
     }
-    // console.log(this.target.posX, this.img)
 
-    const w = this.target.width
-    const h = this.target.height
     try {
       ctx.drawImage(
         this.img,
-        this.target.posX - this.target.width / 2,
-        this.target.posY - this.target.height / 2,
+        this.target.pos.x - this.target.width / 2,
+        this.target.pos.y - this.target.height / 2,
         this.target.width,
         this.target.height
       )

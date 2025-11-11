@@ -1,4 +1,6 @@
 import type { Board } from "./Board"
+import type { BoardStroke } from "./parts/BoardStroke"
+import type { BoardPosition } from "./parts/BoardPosition"
 import type { BoardUpdate } from "./Update"
 
 export function generateRandomId() {
@@ -13,6 +15,9 @@ export class BoardObject {
   id: string
   parent: string | undefined
   board: Board
+
+  stroke: BoardStroke | undefined
+  pos: BoardPosition | undefined
 
   constructor(board: Board, id: string) {
     this.id = id

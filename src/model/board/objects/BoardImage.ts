@@ -1,5 +1,6 @@
 import type { Board } from '../Board'
 import { BoardObject } from '../BoardObject'
+import { BoardPosition } from '../parts/BoardPosition'
 import type {
   BoardAddPointUpdate,
   BoardSetImageUpdate,
@@ -7,23 +8,23 @@ import type {
 } from '../Update'
 
 export class BoardImage extends BoardObject {
+  pos: BoardPosition
+
   src: string
   width: number
   height: number
-  posX: number
-  posY: number
 
   constructor(board: Board, id: string) {
     super(board, id)
-
+    this.pos = new BoardPosition()
     this.src = ''
     this.width = 0
     this.height = 0
-    this.posX = 0
-    this.posY = 0
   }
 
   update(update: BoardUpdate): boolean {
+    if (this.pos.update(update)) return true
+
     if (update.type == 'setImage') return this.handleSetImage(update)
 
     return super.update(update)
@@ -33,15 +34,13 @@ export class BoardImage extends BoardObject {
     this.src = update.src
     this.width = update.width
     this.height = update.height
-    this.posX = update.posX
-    this.posY = update.posY
     return true
   }
 
   getBoundingRect() {
     return {
-      cx: this.posX,
-      cy: this.posY,
+      cx: this.pos.x,
+      cy: this.pos.y,
       w: this.width,
       h: this.height,
     }

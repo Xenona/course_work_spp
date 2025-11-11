@@ -13,6 +13,12 @@ export function write_BoardDeleteUpdate(w, s) {
 export function write_BoardStrokeUpdate(w, s) {
 throw new Error('OKFAIL Not supported');}
 
+export function write_BoardMoveUpdate(w, s) {
+  w.writeId(s.id);
+  w.writeNumber(s.deltaX);
+  w.writeNumber(s.deltaY);
+}
+
 export function write_BoardAddPointUpdate(w, s) {
   w.writeId(s.id);
   w.writeNumber(s.pointX);
@@ -24,8 +30,6 @@ export function write_BoardSetImageUpdate(w, s) {
   w.writeString(s.src);
   w.writeNumber(s.width);
   w.writeNumber(s.height);
-  w.writeNumber(s.posX);
-  w.writeNumber(s.posY);
 }
 
 export function write_BoardUpdate(w, s) {
@@ -50,13 +54,18 @@ export function write_BoardUpdate(w, s) {
     write_BoardStrokeUpdate(w, s);
     break;
 
-  case "addPoint":
+  case "move":
     w.writeBits(4, 3);
+    write_BoardMoveUpdate(w, s);
+    break;
+
+  case "addPoint":
+    w.writeBits(5, 3);
     write_BoardAddPointUpdate(w, s);
     break;
 
   case "setImage":
-    w.writeBits(5, 3);
+    w.writeBits(6, 3);
     write_BoardSetImageUpdate(w, s);
     break;
 
@@ -84,6 +93,15 @@ export function read_BoardDeleteUpdate(r) {
 export function read_BoardStrokeUpdate(r) {
 throw new Error('OKFAIL Not supported');}
 
+export function read_BoardMoveUpdate(r) {
+  const s = {};
+  s.id = r.readId();
+  s.type = "move";
+  s.deltaX = r.readNumber();
+  s.deltaY = r.readNumber();
+  return s;
+}
+
 export function read_BoardAddPointUpdate(r) {
   const s = {};
   s.id = r.readId();
@@ -100,8 +118,6 @@ export function read_BoardSetImageUpdate(r) {
   s.src = r.readString();
   s.width = r.readNumber();
   s.height = r.readNumber();
-  s.posX = r.readNumber();
-  s.posY = r.readNumber();
   return s;
 }
 
@@ -120,9 +136,12 @@ export function read_BoardUpdate(r) {
     return read_BoardStrokeUpdate(r);
 
   case 4:
-    return read_BoardAddPointUpdate(r);
+    return read_BoardMoveUpdate(r);
 
   case 5:
+    return read_BoardAddPointUpdate(r);
+
+  case 6:
     return read_BoardSetImageUpdate(r);
 
   }

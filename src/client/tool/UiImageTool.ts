@@ -70,11 +70,19 @@ export class UiImageTool extends UiBaseTool {
       id,
       type: 'setImage',
       src: fileName,
-      posX: this.cordsX,
-      posY: this.cordsY,
       width: image.naturalWidth / 3,
       height: image.naturalHeight / 3,
     })
+
+    this.controller.updateDispatcher.update({
+      type: 'move',
+      id,
+      deltaX: this.cordsX,
+      deltaY: this.cordsY,
+    })
+
+    this.controller.selection.addSelected(id)
+    this.controller.tool.enableSelected()
   }
 
   activate(): void {

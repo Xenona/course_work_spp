@@ -3,6 +3,7 @@ import './Toolbar.css'
 
 const ICON_MAPPING: Record<string, string> = {
   selection: 'near_me',
+  pan: 'pan_tool',
   move: 'open_with',
   brush: 'brush',
   image: 'image',

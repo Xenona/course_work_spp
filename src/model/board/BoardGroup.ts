@@ -7,6 +7,10 @@ export class BoardGroup extends BoardObject {
   update(update: BoardUpdate): boolean {
     if (update.type == 'addMember') return this.handleAddMember(update)
 
+    for(const o of this.objects) {
+      this.board.update({ ...update, id: o})
+    }
+
     return super.update(update)
   }
 

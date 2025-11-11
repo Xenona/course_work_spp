@@ -22,6 +22,11 @@ export type BoardStrokeUpdate = BaseBoardUpdate<'setStroke'> & {
   size?: number
 }
 
+export type BoardMoveUpdate = BaseBoardUpdate<'move'> & {
+  deltaX: number
+  deltaY: number
+}
+
 export type BoardAddPointUpdate = BaseBoardUpdate<'addPoint'> & {
   pointX: number
   pointY: number
@@ -31,8 +36,6 @@ export type BoardSetImageUpdate = BaseBoardUpdate<'setImage'> & {
   src: string
   width: number
   height: number
-  posX: number
-  posY: number
 }
 
 export type BoardUpdate =
@@ -42,3 +45,4 @@ export type BoardUpdate =
   | BoardStrokeUpdate
   | BoardAddPointUpdate
   | BoardSetImageUpdate
+  | BoardMoveUpdate

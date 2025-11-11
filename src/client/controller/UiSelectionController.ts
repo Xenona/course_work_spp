@@ -1,8 +1,12 @@
+import type { Board } from '@/model/board/Board'
+
 export class UiSelectionController extends EventTarget {
   selectedId: string[] = []
+  board: Board
 
-  constructor() {
+  constructor(board: Board) {
     super()
+    this.board = board
   }
 
   select(id: string) {
@@ -25,5 +29,23 @@ export class UiSelectionController extends EventTarget {
     if (!this.selectedId.includes(id)) return
     this.selectedId = this.selectedId.filter((e) => e != id)
     this.dispatchEvent(new Event('change'))
+  }
+
+  isInsideSelected(x: number, y: number): boolean {
+    for (const id of this.selectedId) {
+      const obj = this.board.objects.get(id)
+      if (!obj) continue
+
+      const { cx, cy, w, h } = obj?.getBoundingRect()
+      if (
+        x > cx - w / 2 &&
+        x < cx + w / 2 &&
+        y > cy - h / 2 &&
+        y < cy + h / 2
+      ) {
+        return true
+      }
+    }
+    return false
   }
 }

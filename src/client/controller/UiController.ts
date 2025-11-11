@@ -25,6 +25,6 @@ export class UiController {
     this.pos = new UiPositionController()
     this.tool = new UiToolController()
     this.mouseController = new UiMouseController(this.tool)
-    this.selection = new UiSelectionController()
+    this.selection = new UiSelectionController(board)
   }
 }

@@ -15,24 +15,35 @@ export interface ITool {
 
 export class UiToolController extends EventTarget {
   tools: ITool[]
-  moveTool: ITool | null
+  panTool: ITool | null
   currentTool: ITool | null
+
+  defaultSelected: ITool | null
+  defaultNotSelected: ITool | null
 
   constructor() {
     super()
 
     this.tools = []
-    this.moveTool = null
+    this.panTool = null
     this.currentTool = null
+    this.defaultSelected = null
+    this.defaultNotSelected = null
   }
 
-  addMoveTool(tool: ITool) {
-    this.moveTool = tool
+  addPanTool(tool: ITool) {
+    this.panTool = tool
     this.tools.push(tool)
   }
 
-  addTool(tool: ITool) {
+  addTool(
+    tool: ITool,
+    options: { defaultSelected?: boolean; defaultNotSelected?: boolean } = {}
+  ) {
     this.tools.push(tool)
+
+    if (options.defaultSelected) this.defaultSelected = tool
+    if (options.defaultNotSelected) this.defaultNotSelected = tool
   }
 
   selectTool(tool: ITool) {
@@ -40,5 +51,13 @@ export class UiToolController extends EventTarget {
     this.currentTool = tool
     this.currentTool?.activate()
     this.dispatchEvent(new CustomEvent('change'))
+  }
+
+  enableSelected() {
+    if (this.defaultSelected) this.selectTool(this.defaultSelected)
+  }
+
+  enableNotSelected() {
+    if (this.defaultNotSelected) this.selectTool(this.defaultNotSelected)
   }
 }

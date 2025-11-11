@@ -10,10 +10,14 @@ export class DrawingRenderer extends ObjectRenderer<BoardDrawing> {
     ctx.lineWidth = this.target.stroke.size
     ctx.lineCap = 'round'
     ctx.lineJoin = 'round'
-    ctx.moveTo(...this.target.points[0])
+    const posX = this.target.pos.x
+    const posY = this.target.pos.y
+
+    ctx.moveTo(this.target.points[0][0] + posX, this.target.points[0][1] + posY)
 
     for (let i = 0; i < this.target.points.length; i++) {
-      ctx.lineTo(...this.target.points[i])
+      const [x, y] = this.target.points[i]
+      ctx.lineTo(x + posX, y + posY)
     }
 
     ctx.stroke()

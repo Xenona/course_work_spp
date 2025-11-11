@@ -59,6 +59,7 @@ export class UiSelectionTool extends UiBaseTool {
           } else {
             this.controller.selection.select(obj.id)
           }
+          this.controller.tool.enableSelected()
           return
         }
       }
@@ -79,6 +80,10 @@ export class UiSelectionTool extends UiBaseTool {
           this.controller.selection.addSelected(obj.id)
         }
       }
+      if(this.controller.selection.selectedId.length > 0) {
+        this.controller.tool.enableSelected()
+      }
+
       return
     }
   }

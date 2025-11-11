@@ -5,7 +5,7 @@ import type { BoardUpdate } from '../model/board/Update'
 import { Renderer } from '../renderer/Renderer'
 import { UiController } from './controller/UiController'
 import { UiBrushTool } from './tool/UiBrushTool'
-import { UiMoveTool } from './tool/UiMoveTool'
+import { UiPanTool as UiPanTool } from './tool/UiPanTool'
 import { RootUI } from './ui/RootUI'
 import 'material-icons/iconfont/material-icons.css'
 import { BoardDispatcher } from '@/dispatcher/BoardDispatcher'
@@ -13,6 +13,7 @@ import { WebsocketDispatcher } from '@/dispatcher/WebsocketDispatcher'
 import { UiSelectionTool } from './tool/UiSelectionTool'
 import { SelectionUpdater } from './features/SelectionUpdater'
 import { UiImageTool } from './tool/UiImageTool'
+import { UiMoveTool } from './tool/UiMoveTool'
 
 const board = new Board()
 
@@ -21,8 +22,13 @@ new BoardDispatcher(board, dispatcher)
 new WebsocketDispatcher(location.href + '/ws', dispatcher)
 
 const uiController = new UiController(board, dispatcher)
-uiController.tool.addTool(new UiSelectionTool(uiController))
-uiController.tool.addMoveTool(new UiMoveTool(uiController))
+uiController.tool.addTool(new UiSelectionTool(uiController), {
+  defaultNotSelected: true,
+})
+uiController.tool.addPanTool(new UiPanTool(uiController))
+uiController.tool.addTool(new UiMoveTool(uiController), {
+  defaultSelected: true,
+})
 uiController.tool.addTool(new UiBrushTool(uiController))
 uiController.tool.addTool(new UiImageTool(uiController))
 uiController.tool.selectTool(uiController.tool.tools[0])
