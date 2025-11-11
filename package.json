@@ -13,6 +13,7 @@
     "genTybii": "bun run --bun tybii_gen src/model/board/Update.ts gen/tybii_board_update.js"
   },
   "dependencies": {
+    "cassandra-driver": "^4.8.0",
     "material-icons": "^1.13.14",
     "tybii-core": "../tybii-core",
     "tybii-gen": "../tybii-gen"

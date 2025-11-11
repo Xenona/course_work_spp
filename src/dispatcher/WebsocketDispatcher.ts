@@ -17,14 +17,14 @@ export class WebsocketDispatcher {
 
   constructor(path: string, dispatcher: UpdateDispatcher) {
     this.websocket = new WebSocket(path)
+    this.websocket.binaryType = "arraybuffer"
     this.dispatcher = dispatcher
 
     this.websocket.addEventListener(
       'message',
-      async (e: MessageEvent<Blob>) => {
-        console.log(e.data)
+      async (e: MessageEvent<ArrayBuffer>) => {
         const update = deserializeSmart(
-          await e.data.arrayBuffer(),
+          e.data,
           read_BoardUpdate
         )
         this.skipUpdates.add(update)

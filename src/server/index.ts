@@ -1,10 +1,28 @@
 import { serve, type ServerWebSocket } from 'bun'
 import uiIndex from '@/client/index.html'
+import cassandra from 'cassandra-driver'
+import { UpdatesSaver } from './UpdatesSaver'
+
+const boardU = '0196923f-16d2-7000-a809-e308a0fd11b0'
 
 export class Server {
   sockets: Set<ServerWebSocket<unknown>> = new Set()
+  client: cassandra.Client
+  updatesSaver: UpdatesSaver
 
-  constructor() {}
+  constructor() {
+    this.client = new cassandra.Client({
+      contactPoints: ['172.18.0.2'],
+      localDataCenter: 'datacenter1',
+      keyspace: 'boardy',
+    })
+
+    this.updatesSaver = new UpdatesSaver(this.client)
+  }
+
+  async connect() {
+    this.client.connect()
+  }
 
   start() {
     const self = this
@@ -20,13 +38,16 @@ export class Server {
         },
       },
       websocket: {
-        open(ws) {
+        async open(ws) {
+          const prevUpds = await self.updatesSaver.getUpdates(boardU)
+          for (let u of prevUpds) ws.send(u)
           self.sockets.add(ws)
         },
         close(ws) {
           self.sockets.delete(ws)
         },
-        message(ws, message) {
+        async message(ws, message) {
+          await self.updatesSaver.saveUpdate(boardU, message as Buffer)
           for (const sock of self.sockets) {
             if (sock != ws) sock.send(message)
           }
