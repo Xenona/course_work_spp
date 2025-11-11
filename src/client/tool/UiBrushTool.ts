@@ -28,7 +28,8 @@ export class UiBrushTool extends UiBaseTool {
     this.controller.updateDispatcher.update({
       type: 'addPoint',
       id,
-      point: [e.boardX, e.boardY],
+      pointX: e.boardX,
+      pointY: e.boardY,
     })
 
     this.currentDrawing = id
@@ -39,7 +40,8 @@ export class UiBrushTool extends UiBaseTool {
       this.controller.updateDispatcher.update({
         type: 'addPoint',
         id: this.currentDrawing,
-        point: [e.boardX, e.boardY],
+        pointX: e.boardX,
+        pointY: e.boardY,
       })
     }
   }

@@ -31,7 +31,8 @@ function addPoints(drawing: BoardDrawing) {
     drawing.update({
       type: 'addPoint',
       id: drawing.id,
-      point: [point[0], point[1]],
+      pointX: point[0],
+      pointY: point[1],
     })
 }
 

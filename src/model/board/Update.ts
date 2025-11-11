@@ -23,7 +23,8 @@ export type BoardStrokeUpdate = BaseBoardUpdate<'setStroke'> & {
 }
 
 export type BoardAddPointUpdate = BaseBoardUpdate<'addPoint'> & {
-  point: [number, number]
+  pointX: number
+  pointY: number
 }
 
 export type BoardUpdate =

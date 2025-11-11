@@ -8,7 +8,13 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
+  "scripts": {
+    "dev": "bun run --watch index.ts",
+    "genTybii": "bun run --bun tybii_gen src/model/board/Update.ts gen/tybii_board_update.js"
+  },
   "dependencies": {
-    "material-icons": "^1.13.14"
+    "material-icons": "^1.13.14",
+    "tybii-core": "../tybii-core",
+    "tybii-gen": "../tybii-gen"
   }
 }

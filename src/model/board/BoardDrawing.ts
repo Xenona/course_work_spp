@@ -23,7 +23,7 @@ export class BoardDrawing extends BoardObject {
   }
 
   private handleAddPoint(update: BoardAddPointUpdate): boolean {
-    this.points.push(update.point)
+    this.points.push([update.pointX, update.pointY])
     return true
   }
 

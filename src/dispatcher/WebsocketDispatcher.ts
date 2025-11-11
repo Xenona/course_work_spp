@@ -1,5 +1,13 @@
 import type { BoardUpdate } from '@/model/board/Update'
 import type { UpdateDispatcher } from './Dispatcher'
+import { serializeSmart, deserializeSmart } from 'tybii-core'
+import {
+  write_BoardUpdate,
+  read_BoardUpdate,
+} from '../../gen/tybii_board_update'
+
+let perfCounterJson = 0
+let perfCountereOpt = 0
 
 export class WebsocketDispatcher {
   websocket: WebSocket
@@ -11,19 +19,42 @@ export class WebsocketDispatcher {
     this.websocket = new WebSocket(path)
     this.dispatcher = dispatcher
 
-    this.websocket.addEventListener('message', (e) => {
-      const update = JSON.parse(e.data)
-      this.skipUpdates.add(update)
-      this.dispatcher.update(update)
-    })
+    this.websocket.addEventListener(
+      'message',
+      async (e: MessageEvent<Blob>) => {
+        console.log(e.data)
+        const update = deserializeSmart(
+          await e.data.arrayBuffer(),
+          read_BoardUpdate
+        )
+        this.skipUpdates.add(update)
+        this.dispatcher.update(update)
+      }
+    )
 
     this.dispatcher.addEventListener('update', (e) => {
       const update = (e as CustomEvent).detail
       if (this.skipUpdates.has(update)) {
         this.skipUpdates.delete(update)
       } else {
-        this.websocket.send(JSON.stringify(update))
+        this.sendUpdate(update)
       }
     })
   }
+
+  sendUpdate(upd: BoardUpdate) {
+    const serialized = serializeSmart(upd, write_BoardUpdate)
+    perfCounterJson += JSON.stringify(upd).length
+    perfCountereOpt += serialized.byteLength
+    this.websocket.send(serialized)
+  }
 }
+
+setInterval(() => {
+  console.log(
+    'Perf',
+    perfCounterJson,
+    perfCountereOpt,
+    (perfCountereOpt / perfCounterJson) * 100
+  )
+}, 1000)
