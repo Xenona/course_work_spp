@@ -1,4 +1,4 @@
-import type { BoardUpdate } from './Update'
+import type { BoardStrokeUpdate, BoardUpdate } from './Update'
 
 export class BoardStroke {
   color: string
@@ -10,13 +10,15 @@ export class BoardStroke {
   }
 
   update(update: BoardUpdate): boolean {
-    if (update.type == 'setStroke') {
-      if (update.color) this.color = update.color
-      if (update.size) this.size = update.size
+    if (update.type == 'setStroke') return this.updateSetStroke(update)
 
-      return true
-    } else {
-      return false
-    }
+    return false
+  }
+
+  private updateSetStroke(update: BoardStrokeUpdate): boolean {
+    if (update.color) this.color = update.color
+    if (update.size) this.size = update.size
+
+    return true
   }
 }

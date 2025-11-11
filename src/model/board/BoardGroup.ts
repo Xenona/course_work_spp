@@ -10,12 +10,14 @@ export class BoardGroup extends BoardObject {
   }
 
   update(update: BoardUpdate): boolean {
-    if (update.type == 'addMember') {
-      this.objects.push(update.memberId)
-      return true
-    }
+    if (update.type == 'addMember') return this.handleAddMember(update)
 
     return super.update(update)
+  }
+
+  private handleAddMember(update: BoardGroupUpdate): boolean {
+    this.objects.push(update.memberId)
+    return true
   }
 
   get name() {

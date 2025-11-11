@@ -1,6 +1,6 @@
 import { BoardObject } from './BoardObject'
 import { BoardStroke } from './BoardStroke'
-import type { BoardUpdate } from './Update'
+import type { BoardAddPointUpdate, BoardUpdate } from './Update'
 
 export class BoardDrawing extends BoardObject {
   points: [number, number][]
@@ -16,12 +16,14 @@ export class BoardDrawing extends BoardObject {
   update(update: BoardUpdate): boolean {
     if (this.stroke.update(update)) return true
 
-    if (update.type == 'addPoint') {
-      this.points.push(update.point)
-      return true
-    }
+    if (update.type == 'addPoint') return this.handleAddPoint(update)
 
     return super.update(update)
+  }
+
+  private handleAddPoint(update: BoardAddPointUpdate): boolean {
+    this.points.push(update.point)
+    return true
   }
 
   getBoundingRect() {
