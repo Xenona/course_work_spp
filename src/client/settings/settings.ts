@@ -1,5 +1,8 @@
  
 
+import { checkAuthAndRedirectClient } from "../auth/jwtVerify";
+import { checkAuthAndRedirect } from "../auth/login";
+
 interface Settings {
   settings_id: string;
   theme: boolean;
@@ -73,6 +76,8 @@ async function saveSettings(boardId: string): Promise<Settings> {
 
 
 async function bootstrap() {
+
+  checkAuthAndRedirectClient()
 
   const msgDiv = document.getElementById("msg") as HTMLDivElement;
   const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;

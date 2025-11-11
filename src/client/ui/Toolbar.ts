@@ -64,6 +64,26 @@ export class Toolbar {
     this.controller.tool.addEventListener('change', this.update)
     this.update()
 
+    document.addEventListener('DOMContentLoaded', async (e) => {
+      const resp = await fetch("/auth/verify", {
+        method: "GET",
+        credentials: "include", 
+        headers: { "Accept": "application/json" },
+      });
+
+      if (resp.ok) {
+        const data = await resp.json();
+         for (const [name, button] of this.buttons) {
+            button.disabled = false
+          }
+      } else {
+           const data = await resp.json();
+         for (const [name, button] of this.buttons) {
+            button.disabled = true
+          }
+      }
+    })
+
     document.body.addEventListener('keydown', (e) => {
       let targetTool: string | null = null
 

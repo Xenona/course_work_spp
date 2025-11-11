@@ -26,7 +26,13 @@ function createEntryEl(entry: BoardInMenu) {
 }
 
 async function refreshBoards() {
-  const res: BoardInMenu[] = await (await fetch('/api/boards')).json()
+  const res: BoardInMenu[] = await (await fetch('/api/boards',
+    {method: "GET",
+      credentials: "include",      
+      headers: {
+        "Accept": "application/json",
+      },}
+  )).json()
   boardList.replaceChildren(...res.map(createEntryEl))
 
   // setTimeout(() => refreshBoards(), 1000)

@@ -75,6 +75,24 @@ export class ObjectsBlock extends SidebarBlock {
     deleteBtn.addEventListener('click', () => this.deleteSelected())
     buttonCnt.append(deleteBtn)
 
+     document.addEventListener('DOMContentLoaded', async (e) => {
+      const resp = await fetch("/auth/verify", {
+        method: "GET",
+        credentials: "include",          
+        headers: { "Accept": "application/json" },
+      });
+
+      if (resp.ok) {
+        groupBtn.disabled = false
+        animBtn.disabled = false
+        deleteBtn.disabled = false
+      } else {
+        groupBtn.disabled = true
+        animBtn.disabled = true
+        deleteBtn.disabled = true
+      }
+    })
+
     document.body.addEventListener('keydown', (e) => {
       if (e.key == 'Delete') this.deleteSelected()
     })

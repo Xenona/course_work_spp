@@ -8,12 +8,25 @@ export class BoardManager {
     this.client = client
   }
 
-  async getBoards(): Promise<BoardInMenu[]> {
+  async getBoards(inclPrivate:boolean=true): Promise<BoardInMenu[]> {
     const b = await this.client.execute('SELECT * FROM board_list')
-    return b.rows.map((e) => ({
-      uuid: e.boardid.toString(),
-      name: e.name,
-    }))
+
+    let res = []
+    for (const e of b.rows) {
+      const s = (await this.client.execute('SELECT * FROM settings WHERE settings_id=?', [e.setting])).rows[0]
+      res.push({
+        uuid: e.boardid.toString(),
+        name: e.name,
+        private: s.private,
+        setting: s.settings_id
+      })
+    }
+    console.log("COOCOCOCO", inclPrivate)
+    return res.filter((e) =>{
+      console.log(e.private, inclPrivate)
+      return !e.private || inclPrivate
+
+    } )
   }
 
   async createBoard(name: string): Promise<BoardInMenu> {

@@ -1,6 +1,7 @@
 export type BoardInMenu = {
   uuid: string
   setting: string,
+  private: boolean,
   name: string
 }
 

@@ -27,7 +27,9 @@ export class ServerMenu {
         }
 
         if (req.method == 'GET') {
-          return Response.json(await this.boardManager.getBoards())
+          const coo = req.cookies.get('token')
+          console.log("COO", coo)
+          return Response.json(await this.boardManager.getBoards(!!coo))
         }
 
         return new Response('Invalid method', { status: 405 })
