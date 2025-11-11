@@ -29,10 +29,9 @@ export class SelectionUpdater {
       this.strokeSaved = false
     }
 
-    if (this.controller.selection.selectedId) {
-      const obj = this.controller.board.objects.get(
-        this.controller.selection.selectedId
-      )
+    const coreSelId = this.controller.selection.selectedId[0]
+    if (coreSelId) {
+      const obj = this.controller.board.objects.get(coreSelId)
       if (obj?.stroke) {
         this.strokeSaved = true
         this.controller.stroke.save()
@@ -47,11 +46,10 @@ export class SelectionUpdater {
 
   private onStrokeChange() {
     if (this.updating) return
-    if (this.controller.selection.selectedId) {
+
+    for (const id of this.controller.selection.selectedId) {
       this.controller.updateDispatcher.update(
-        this.controller.stroke.generateUpdate(
-          this.controller.selection.selectedId
-        )
+        this.controller.stroke.generateUpdate(id)
       )
     }
   }

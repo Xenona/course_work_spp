@@ -4,10 +4,8 @@ import type { Renderer } from './Renderer'
 
 export class GroupRenderer extends ObjectRenderer<BoardGroup> {
   render(r: Renderer, ctx: CanvasRenderingContext2D) {
-    // for (const obj of this.target.objects) {
-    //   r.addObject(obj)
-      
-    //   r.getObjectRenderer(obj.id)!.render(r, ctx)
-    // }
+    for (const id of this.target.objects) {
+      r.getObjectRenderer(id)!.render(r, ctx)
+    }
   }
 }

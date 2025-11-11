@@ -65,14 +65,4 @@ export class UiSelectionTool extends UiBaseTool {
   get name(): string {
     return 'selection'
   }
-
-  protected onStrokeChange = () => {
-    if (!this.activate) return
-    const id = this.controller.selection.selectedId
-    if (!id) return
-
-    this.controller.updateDispatcher.update(
-      this.controller.stroke.generateUpdate(id)
-    )
-  }
 }

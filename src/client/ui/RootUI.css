@@ -29,6 +29,26 @@
   }
 }
 
+button {
+  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid #222;
+
+  &.active,
+  &.active:active,
+  &.active:hover {
+    background-color: #f80;
+  }
+
+  &:hover {
+    background-color: #ccc;
+  }
+
+  &:active {
+    background-color: #aaa;
+  }
+}
+
 /* .div1 {
 }
 .div2 {

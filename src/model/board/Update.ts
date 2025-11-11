@@ -1,8 +1,14 @@
 export type BaseBoardUpdate<NAME> = { id: string; type: NAME }
 
+export type BoardGroupUpdate = {
+  type: 'addMember'
+  id: string
+  memberId: string
+}
+
 export type BoardAddUpdate = {
   type: 'addObject'
-  kind: 'drawing'
+  kind: 'drawing' | 'group' | 'animation'
   id: string
 }
 
@@ -16,6 +22,7 @@ export type BoardAddPointUpdate = BaseBoardUpdate<'addPoint'> & {
 }
 
 export type BoardUpdate =
+  | BoardGroupUpdate
   | BoardAddUpdate
   | BoardStrokeUpdate
   | BoardAddPointUpdate

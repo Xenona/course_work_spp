@@ -43,4 +43,8 @@ export class BoardDrawing extends BoardObject {
       h: maxY - minY + this.stroke.size,
     }
   }
+
+  get name() {
+    return 'Drawing ' + this.id.slice(0, 8)
+  }
 }

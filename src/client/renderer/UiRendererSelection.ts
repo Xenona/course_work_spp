@@ -10,8 +10,11 @@ export class UiRendererSelection implements IRendererOverlay {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    for (let obj of this.controller.board.objects.values()) {
-      if (obj.id != this.controller.selection.selectedId) continue
+    for (let objId of this.controller.selection.selectedId) {
+      // if (obj.id != this.controller.selection.selectedId) continue
+      const obj = this.controller.board.objects.get(objId)
+      if (!obj) continue
+
       const { cx, cy, w, h } = obj.getBoundingRect()
       ctx.strokeStyle = 'red'
       ctx.lineWidth = 1

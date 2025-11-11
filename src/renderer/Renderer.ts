@@ -1,7 +1,9 @@
+import { BoardAnimation } from '@/model/board/BoardAnimation'
 import type { Board } from '../model/board/Board'
 import { BoardDrawing } from '../model/board/BoardDrawing'
 import { BoardGroup } from '../model/board/BoardGroup'
 import type { BoardObject } from '../model/board/BoardObject'
+import { AnimationRenderer } from './AnimationRenderer'
 import { DrawingRenderer } from './DrawingRenderer'
 import { GroupRenderer } from './GroupRenderer'
 import type { IRendererOverlay } from './IRendererOverlay'
@@ -49,25 +51,24 @@ export class Renderer {
     this.overlays.push(overlay)
   }
 
-  private addObject(object: BoardObject) {
-    if (this.renderers.has(object.id)) return
-
-    if (object instanceof BoardDrawing) {
-      this.renderers.set(object.id, new DrawingRenderer(object))
-    } else if (object instanceof BoardGroup) {
-      this.renderers.set(object.id, new GroupRenderer(object))
-    }
-  }
-
   getObjectRenderer(id: string) {
+    if (!this.renderers.has(id)) {
+      const object = this.board.objects.get(id)
+      if (object instanceof BoardDrawing) {
+        this.renderers.set(object.id, new DrawingRenderer(object))
+      } else if (object instanceof BoardAnimation) {
+        this.renderers.set(object.id, new AnimationRenderer(object))
+      } else if (object instanceof BoardGroup) {
+        this.renderers.set(object.id, new GroupRenderer(object))
+      } else {
+        throw new Error('Unknown object ' + id + ' ' + object)
+      }
+    }
+
     return this.renderers.get(id)
   }
 
   render() {
-    for (const obj of this.board.objects.values()) {
-      this.addObject(obj)
-    }
-
     this.ctx.reset()
     this.ctx.translate(this.width / 2, this.height / 2)
     this.ctx.translate(this.position[0], this.position[1])
@@ -76,11 +77,10 @@ export class Renderer {
     this.ctx.fillStyle = '#f0f'
     this.ctx.fillRect(0, 0, 10, 10)
 
-    for (const renderer of this.renderers.values()) {
-      renderer.render(this, this.ctx)
-    }
+    const rootId = this.board.rootGroup
+    this.getObjectRenderer(rootId.id)!.render(this, this.ctx)
 
-    for(const overlay of this.overlays) {
+    for (const overlay of this.overlays) {
       overlay.draw(this.ctx)
     }
   }
