@@ -33,3 +33,9 @@ test('Can add member', () => {
   expect(board.objects.get(id)?.parent).toBe(groupId)
   expect((board.objects.get(groupId) as BoardGroup).objects).toContain(id)
 })
+
+test('Can get bounding box', () => {
+  const { board, groupId } = createBoardAndGroup()
+  const group = board.objects.get(groupId)
+  expect(group?.getBoundingRect().w).toBe(0);
+})

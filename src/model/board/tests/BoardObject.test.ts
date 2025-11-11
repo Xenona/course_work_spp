@@ -1,15 +1,18 @@
 import { expect, test } from 'bun:test'
 import { BoardObject } from '../BoardObject'
+import { Board } from '../Board'
 
 test('Can create object', () => {
-  const obj = new BoardObject('id')
+  const board = new Board()
+  const obj = new BoardObject(board, 'id')
 
   expect(obj.id).toBe('id')
   expect(obj.name).toBe('Object id')
 })
 
 test('Bounding box is 0', () => {
-  const obj = new BoardObject('id')
+  const board = new Board()
+  const obj = new BoardObject(board, 'id')
 
   const bb = obj.getBoundingRect()
   expect(bb.cx).toBe(0)

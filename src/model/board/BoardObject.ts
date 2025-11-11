@@ -1,3 +1,4 @@
+import type { Board } from "./Board"
 import type { BoardStroke } from "./BoardStroke"
 import type { BoardUpdate } from "./Update"
 
@@ -13,9 +14,11 @@ export class BoardObject {
   id: string
   stroke: BoardStroke | undefined
   parent: string | undefined
+  board: Board
 
-  constructor(id: string) {
+  constructor(board: Board, id: string) {
     this.id = id
+    this.board = board
   }
 
   update(update: BoardUpdate): boolean {

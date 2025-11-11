@@ -15,7 +15,7 @@ export class Board {
 
   constructor() {
     this.objects = new Map()
-    this.rootGroup = new BoardGroup('root')
+    this.rootGroup = new BoardGroup(this, 'root')
     this.objects.set(this.rootGroup.id, this.rootGroup)
   }
 
@@ -40,11 +40,11 @@ export class Board {
   private handleAddObject(update: BoardAddUpdate): boolean {
     let obj: BoardObject
     if (update.kind == 'drawing') {
-      obj = new BoardDrawing(update.id)
+      obj = new BoardDrawing(this, update.id)
     } else if (update.kind == 'group') {
-      obj = new BoardGroup(update.id)
+      obj = new BoardGroup(this, update.id)
     } else if (update.kind == 'animation') {
-      obj = new BoardAnimation(update.id)
+      obj = new BoardAnimation(this, update.id)
     } else {
       console.warn('Unknown kind', update.kind)
       return false

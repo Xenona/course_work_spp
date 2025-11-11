@@ -1,4 +1,4 @@
-import { generateRandomId } from '@/model/board/BoardObject'
+import { BoardObject } from '@/model/board/BoardObject'
 import type { UiController } from '../controller/UiController'
 import type { BoardMouseEvent } from '../controller/UiMouseController'
 import { UiBaseTool } from './UiBaseTool'
@@ -40,7 +40,9 @@ export class UiSelectionTool extends UiBaseTool {
     this.lastPos = null
     this.startPos = null
 
-    const objects = Array.from(this.controller.board.objects.values())
+    const objects = Array.from(this.controller.board.rootGroup.objects).map(
+      (e) => this.controller.board.objects.get(e) as BoardObject
+    )
     objects.reverse()
 
     if (w < 3 && h < 3) {

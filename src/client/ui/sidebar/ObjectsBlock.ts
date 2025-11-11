@@ -132,6 +132,26 @@ export class ObjectsBlock extends SidebarBlock {
   groupObjects(kind: 'animation' | 'group') {
     if (this.controller.selection.selectedId.length == 0) return
 
+    if (this.controller.selection.selectedId.length == 1) {
+      const obj = this.controller.board.objects.get(
+        this.controller.selection.selectedId[0]
+      )
+      if (obj instanceof BoardGroup) {
+        for (const childId of obj.objects) {
+          this.controller.updateDispatcher.update({
+            type: 'addMember',
+            id: obj.parent ?? 'root',
+            memberId: childId,
+          })
+        }
+        this.controller.updateDispatcher.update({
+          type: 'deleteObject',
+          id: obj.id,
+        })
+        return
+      }
+    }
+
     const id = generateRandomId()
 
     this.controller.updateDispatcher.update({
