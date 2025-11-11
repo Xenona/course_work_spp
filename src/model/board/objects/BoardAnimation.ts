@@ -1,4 +1,4 @@
-import { BoardGroup } from './BoardGroup'
+import { BoardGroup } from '../BoardGroup'
 
 export class BoardAnimation extends BoardGroup {
   get name() {

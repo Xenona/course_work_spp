@@ -1,4 +1,4 @@
-import type { BoardStrokeUpdate, BoardUpdate } from './Update'
+import type { BoardStrokeUpdate, BoardUpdate } from '../Update'
 
 export class BoardStroke {
   color: string

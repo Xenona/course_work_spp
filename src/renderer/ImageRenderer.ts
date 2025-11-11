@@ -1,5 +1,5 @@
-import type { BoardImage } from '@/model/board/BoardImage'
-import type { BoardDrawing } from '../model/board/BoardDrawing'
+import type { BoardImage } from '@/model/board/objects/BoardImage'
+import type { BoardDrawing } from '../model/board/objects/BoardDrawing'
 import { ObjectRenderer } from './ObjectRenderer'
 
 export class ImageRenderer extends ObjectRenderer<BoardImage> {

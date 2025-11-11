@@ -1,4 +1,3 @@
-import { BoardDrawing } from './BoardDrawing'
 import { BoardObject } from './BoardObject'
 import type { BoardGroupUpdate, BoardUpdate } from './Update'
 

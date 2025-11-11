@@ -1,10 +1,10 @@
-import type { Board } from './Board'
-import { BoardObject } from './BoardObject'
+import type { Board } from '../Board'
+import { BoardObject } from '../BoardObject'
 import type {
   BoardAddPointUpdate,
   BoardSetImageUpdate,
   BoardUpdate,
-} from './Update'
+} from '../Update'
 
 export class BoardImage extends BoardObject {
   src: string

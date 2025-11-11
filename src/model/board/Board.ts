@@ -1,7 +1,7 @@
-import { BoardAnimation } from './BoardAnimation'
-import { BoardDrawing } from './BoardDrawing'
+import { BoardAnimation } from './objects/BoardAnimation'
+import { BoardDrawing } from './objects/BoardDrawing'
 import { BoardGroup } from './BoardGroup'
-import { BoardImage } from './BoardImage'
+import { BoardImage } from './objects/BoardImage'
 import type { BoardObject } from './BoardObject'
 import type {
   BoardAddUpdate,

@@ -1,4 +1,4 @@
-import type { BoardAnimation } from '@/model/board/BoardAnimation'
+import type { BoardAnimation } from '@/model/board/objects/BoardAnimation'
 import type { BoardGroup } from '../model/board/BoardGroup'
 import { ObjectRenderer } from './ObjectRenderer'
 import type { Renderer } from './Renderer'

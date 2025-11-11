@@ -1,4 +1,4 @@
-import type { BoardDrawing } from '../model/board/BoardDrawing'
+import type { BoardDrawing } from '../model/board/objects/BoardDrawing'
 import { ObjectRenderer } from './ObjectRenderer'
 
 export class DrawingRenderer extends ObjectRenderer<BoardDrawing> {

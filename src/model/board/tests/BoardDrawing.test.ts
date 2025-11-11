@@ -3,7 +3,7 @@ import { BoardGroup } from '../BoardGroup'
 import { generateRandomId } from '../BoardObject'
 import { createBoardAndGroup } from './Board.test'
 import { Board } from '../Board'
-import { BoardDrawing } from '../BoardDrawing'
+import { BoardDrawing } from '../objects/BoardDrawing'
 
 export function createBoardAndDrawing(): { board: Board; drawing: BoardDrawing } {
   const board = new Board()

@@ -1,11 +1,10 @@
-import type { Board } from './Board'
-import { BoardObject } from './BoardObject'
-import { BoardStroke } from './BoardStroke'
-import type { BoardAddPointUpdate, BoardUpdate } from './Update'
+import type { Board } from '../Board'
+import { BoardObject } from '../BoardObject'
+import { BoardStroke } from '../parts/BoardStroke'
+import type { BoardAddPointUpdate, BoardUpdate } from '../Update'
 
 export class BoardDrawing extends BoardObject {
   points: [number, number][]
-
   stroke: BoardStroke
 
   constructor(board: Board, id: string) {

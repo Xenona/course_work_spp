@@ -1,6 +1,6 @@
-import { BoardAnimation } from '@/model/board/BoardAnimation'
+import { BoardAnimation } from '@/model/board/objects/BoardAnimation'
 import type { Board } from '../model/board/Board'
-import { BoardDrawing } from '../model/board/BoardDrawing'
+import { BoardDrawing } from '../model/board/objects/BoardDrawing'
 import { BoardGroup } from '../model/board/BoardGroup'
 import type { BoardObject } from '../model/board/BoardObject'
 import { AnimationRenderer } from './AnimationRenderer'
@@ -9,7 +9,7 @@ import { GroupRenderer } from './GroupRenderer'
 import type { IRendererOverlay } from './IRendererOverlay'
 import type { ObjectRenderer } from './ObjectRenderer'
 import { ImageRenderer } from './ImageRenderer'
-import { BoardImage } from '@/model/board/BoardImage'
+import { BoardImage } from '@/model/board/objects/BoardImage'
 
 export class Renderer {
   protected canvas: HTMLCanvasElement
