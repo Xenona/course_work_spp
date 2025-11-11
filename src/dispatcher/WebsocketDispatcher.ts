@@ -49,12 +49,3 @@ export class WebsocketDispatcher {
     this.websocket.send(serialized)
   }
 }
-
-setInterval(() => {
-  console.log(
-    'Perf',
-    perfCounterJson,
-    perfCountereOpt,
-    (perfCountereOpt / perfCounterJson) * 100
-  )
-}, 1000)

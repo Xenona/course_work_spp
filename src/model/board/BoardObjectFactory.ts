@@ -7,6 +7,7 @@ import { BoardDrawing } from './objects/BoardDrawing'
 import { BoardImage } from './objects/BoardImage'
 import { BoardShape } from './objects/BoardShape'
 import { BoardSpoiler } from './objects/BoardSpoiler'
+import { BoardText } from './objects/BoardText'
 import type { BoardAddUpdate } from './Update'
 
 export class BoardObjectFactory {
@@ -20,10 +21,10 @@ export class BoardObjectFactory {
     this.registry.set('animation', BoardAnimation)
     this.registry.set('spoiler', BoardSpoiler)
     this.registry.set('anchor', BoardAnchor)
+    this.registry.set('text', BoardText)
   }
 
   construct(board: Board, update: BoardAddUpdate): BoardObject {
-    console.log('Constructing', update)
     const cls = this.registry.get(update.kind)
     if (!cls) {
       throw new Error('Unknown kind ' + update.kind)

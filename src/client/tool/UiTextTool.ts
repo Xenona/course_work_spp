@@ -2,7 +2,7 @@ import type { UiController } from '../controller/UiController'
 import type { BoardMouseEvent } from '../controller/UiMouseController'
 import { UiBaseAddTool } from './UiBaseAddTool'
 
-export class UiAnchorTool extends UiBaseAddTool {
+export class UiTextTool extends UiBaseAddTool {
   constructor(controller: UiController) {
     super(controller)
   }
@@ -10,18 +10,12 @@ export class UiAnchorTool extends UiBaseAddTool {
   doAdd(id: string, e: BoardMouseEvent) {
     this.controller.updateDispatcher.update({
       type: 'addObject',
-      kind: 'anchor',
+      kind: 'text',
       id,
-    })
-
-    this.controller.updateDispatcher.update({
-      type: 'setAnchor',
-      id,
-      target: [-e.boardX, -e.boardY],
     })
   }
 
   get name(): string {
-    return 'anchor'
+    return 'text'
   }
 }

@@ -1,7 +1,5 @@
 import type { UiController } from '@/client/controller/UiController'
 import { ObjectBlock } from './ObjectBlock'
-import { BoardShape } from '@/model/board/objects/BoardShape'
-import { createCheckbox } from '../../utils'
 import { BoardAnchor } from '@/model/board/objects/BoardAnchor'
 
 export class AnchorBlock extends ObjectBlock {

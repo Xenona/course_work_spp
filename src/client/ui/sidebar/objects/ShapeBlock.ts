@@ -30,7 +30,6 @@ export class ShapeBlock extends ObjectBlock {
     super.updateObjects(objects)
 
     const fObj = objects[0]
-    console.log(fObj)
     if (!fObj || !(fObj instanceof BoardShape)) return
 
     this.filledCheckbox.checked = fObj.filled

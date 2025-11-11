@@ -9,6 +9,7 @@ import type { BoardObject } from '@/model/board/BoardObject'
 import { ShapeBlock } from './objects/ShapeBlock'
 import { AnimationBlock } from './objects/AnimationBlock'
 import { AnchorBlock } from './objects/AnchorBlock'
+import { TextBlock } from './objects/TextBlock'
 
 export class Sidebar {
   private _root: HTMLDivElement
@@ -26,6 +27,7 @@ export class Sidebar {
       new ShapeBlock(controller),
       new AnimationBlock(controller),
       new AnchorBlock(controller),
+      new TextBlock(controller),
     ]
 
     this._root.append(...this.blocks.map((e) => e.root))
@@ -43,7 +45,6 @@ export class Sidebar {
     let ty: any | null = null
     for (const obj of this.controller.selection.objects) {
       if (ty === null) {
-        console.log('update', obj)
         ty = Object.getPrototypeOf(obj)
       } else if (ty !== Object.getPrototypeOf(obj)) {
         ty = null

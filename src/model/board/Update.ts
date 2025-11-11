@@ -8,7 +8,7 @@ export type BoardGroupUpdate = {
 
 export type BoardAddUpdate = {
   type: 'addObject'
-  kind: 'drawing' | 'group' | 'animation' | 'image' | 'shape' | 'spoiler' | 'anchor'
+  kind: 'drawing' | 'group' | 'animation' | 'image' | 'shape' | 'spoiler' | 'anchor' | 'text'
   id: string
 }
 
@@ -55,6 +55,10 @@ export type BoardAnchorUpdate = BaseBoardUpdate<'setAnchor'> & {
   target: [number, number]
 }
 
+export type BoardTextUpdate = BaseBoardUpdate<'setText'> & {
+  text?: string
+};
+
 export type BoardUpdate =
   | BoardGroupUpdate
   | BoardAddUpdate
@@ -66,3 +70,4 @@ export type BoardUpdate =
   | BoardShapeUpdate
   | BoardAnimationUpdate
   | BoardAnchorUpdate
+  | BoardTextUpdate

@@ -12,7 +12,6 @@ export class ImageRenderer extends ObjectRenderer<BoardImage> {
   protected draw(ctx: CanvasRenderingContext2D) {
     const s = '/assets/get/' + this.target.src
     if (this.img.src.indexOf(s) == -1) {
-      console.log(s, this.img.src)
       this.img.src = s
     }
 

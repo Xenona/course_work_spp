@@ -21,7 +21,6 @@ export class BoardShape extends BoardObject {
   }
 
   update(update: BoardUpdate): boolean {
-    console.log(update)
     if (this.pos.update(update)) return true
     if (this.stroke.update(update)) return true
 

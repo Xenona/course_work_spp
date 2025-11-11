@@ -59,7 +59,6 @@ export class UiShapeTool extends UiBaseTool {
       filled: false,
     })
     this.controller.updateDispatcher.update(this.controller.stroke.generateUpdate(id))
-    console.log(id, this.controller.stroke.generateUpdate(id))
   }
 
   get name(): string {
@@ -70,7 +69,7 @@ export class UiShapeTool extends UiBaseTool {
     if (this.startPos && this.lastPos) {
       const [x1, y1] = this.startPos
       const [x2, y2] = this.lastPos
-      console.log(this.startPos, this.lastPos)
+
       ctx.strokeStyle = this.controller.stroke.color
       ctx.lineWidth = this.controller.stroke.size
       ctx.strokeRect(x1, y1, x2 - x1, y2 - y1)

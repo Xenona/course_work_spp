@@ -25,13 +25,15 @@ import { BoardShape } from '@/model/board/objects/BoardShape'
 import { BoardGroup } from '@/model/board/BoardGroup'
 import { BoardDrawing } from '@/model/board/objects/BoardDrawing'
 import { BoardAnimation } from '@/model/board/objects/BoardAnimation'
-import { BoardObjectFactory } from '@/model/board/BoardObjectFactory'
 import { UiSpoilerTool } from './tool/UiSpoilerTool'
 import { BoardSpoiler } from '@/model/board/objects/BoardSpoiler'
 import { SpoilerRenderer } from '@/renderer/SpoilerRenderer'
 import { UiAnchorTool } from './tool/UiAnchorTool'
 import { AnchorRenderer } from '@/renderer/AnchorRenderer'
 import { BoardAnchor } from '@/model/board/objects/BoardAnchor'
+import { UiTextTool } from './tool/UiTextTool'
+import { BoardText } from '@/model/board/objects/BoardText'
+import { TextRenderer } from '@/renderer/TextRenderer'
 
 const board = new Board()
 
@@ -52,6 +54,7 @@ uiController.tool.addTool(new UiImageTool(uiController))
 uiController.tool.addTool(new UiShapeTool(uiController))
 uiController.tool.addTool(new UiSpoilerTool(uiController))
 uiController.tool.addTool(new UiAnchorTool(uiController))
+uiController.tool.addTool(new UiTextTool(uiController))
 uiController.tool.selectTool(uiController.tool.tools[0])
 
 new SelectionUpdater(uiController)
@@ -68,6 +71,7 @@ const renderer = root.addRenderer((canvas) => {
   renderer.registerRenderer(BoardImage, ImageRenderer)
   renderer.registerRenderer(BoardSpoiler, SpoilerRenderer)
   renderer.registerRenderer(BoardAnchor, AnchorRenderer)
+  renderer.registerRenderer(BoardText, TextRenderer)
   return renderer
 })
 renderer.start()

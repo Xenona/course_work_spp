@@ -41,6 +41,9 @@ throw new Error('OKFAIL Not supported');}
 export function write_BoardAnchorUpdate(w, s) {
 throw new Error('OKFAIL Not supported');}
 
+export function write_BoardTextUpdate(w, s) {
+throw new Error('OKFAIL Not supported');}
+
 export function write_BoardUpdate(w, s) {
   switch(s.type) {
   case "addMember":
@@ -91,6 +94,11 @@ export function write_BoardUpdate(w, s) {
   case "setAnchor":
     w.writeBits(9, 4);
     write_BoardAnchorUpdate(w, s);
+    break;
+
+  case "setText":
+    w.writeBits(10, 4);
+    write_BoardTextUpdate(w, s);
     break;
 
   }
@@ -154,6 +162,9 @@ throw new Error('OKFAIL Not supported');}
 export function read_BoardAnchorUpdate(r) {
 throw new Error('OKFAIL Not supported');}
 
+export function read_BoardTextUpdate(r) {
+throw new Error('OKFAIL Not supported');}
+
 export function read_BoardUpdate(r) {
   switch(r.readBits(4)) {
   case 0:
@@ -185,6 +196,9 @@ export function read_BoardUpdate(r) {
 
   case 9:
     return read_BoardAnchorUpdate(r);
+
+  case 10:
+    return read_BoardTextUpdate(r);
 
   }
 }

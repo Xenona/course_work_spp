@@ -25,11 +25,9 @@ export class UiImageTool extends UiBaseTool {
 
       const img = new Image()
       img.addEventListener('load', () => {
-        // console.log('Loaded')
         this.emitImage(fileName, img)
       })
       img.src = `/assets/get/${fileName}`
-      console.log(fileName)
     })
   }
 
