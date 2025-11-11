@@ -48,6 +48,7 @@ export type BoardShapeUpdate = BaseBoardUpdate<'setShape'> & {
 export type BoardAnimationUpdate = BaseBoardUpdate<'setAnimation'> & {
   speed?: number
   frameShift?: number
+  trajectoryMode?: boolean
 }
 
 export type BoardUpdate =

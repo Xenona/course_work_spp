@@ -17,7 +17,7 @@ export class Renderer {
 
   protected shouldRun = false
 
-  protected board: Board
+  public board: Board
   protected renderers: Map<string, ObjectRenderer>
 
   protected position: [number, number] = [0, 0]

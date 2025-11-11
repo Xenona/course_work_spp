@@ -8,6 +8,7 @@ export class AnimationBlock extends ObjectBlock {
   speedInput: HTMLInputElement
   pauseBtn: HTMLButtonElement
   playBtn: HTMLButtonElement
+  trajectoryCheck: HTMLInputElement
 
   savedSpeeds: Map<string, number> = new Map()
 
@@ -91,8 +92,18 @@ export class AnimationBlock extends ObjectBlock {
 
     speedRoot.append(prevBtn)
     speedRoot.append(nextBtn)
-
     this._root.append(speedRoot)
+
+    const [trajectoryCheck, trajectoryLabel] = createCheckbox('Trajectory mode')
+    trajectoryCheck.addEventListener('change', () => {
+      this.sendUpdates({
+        type: 'setAnimation',
+        id: '',
+        trajectoryMode: trajectoryCheck.checked,
+      })
+    })
+    this.trajectoryCheck = trajectoryCheck
+    this._root.append(trajectoryCheck, trajectoryLabel)
   }
 
   get targetObject() {
@@ -106,6 +117,7 @@ export class AnimationBlock extends ObjectBlock {
     if (!fObj || !(fObj instanceof BoardAnimation)) return
 
     this.updateSpeed(fObj.speed)
+    this.trajectoryCheck.checked = fObj.trajectoryMode
   }
 
   private updateSpeed(speed: number) {
