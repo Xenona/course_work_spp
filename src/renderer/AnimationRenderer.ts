@@ -7,9 +7,9 @@ export class AnimationRenderer extends ObjectRenderer<BoardAnimation> {
   render(r: Renderer, ctx: CanvasRenderingContext2D) {
     if (this.target.objects.length == 0) return
 
-    const time = (Date.now()) / 500
+    const time = (Date.now()) / 500 * this.target.speed
     const id =
-      this.target.objects[Math.floor(time) % this.target.objects.length]
+      this.target.objects[(Math.floor(time) + this.target.frameShift) % this.target.objects.length]
     r.getObjectRenderer(id)!.render(r, ctx)
   }
 }

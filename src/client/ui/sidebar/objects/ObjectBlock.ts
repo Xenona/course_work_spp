@@ -1,8 +1,8 @@
 import type { UiController } from '@/client/controller/UiController'
 import { SidebarBlock } from '../SidebarBlock'
 import { BoardObject } from '@/model/board/BoardObject'
-import type { BoardShape } from '@/model/board/objects/BoardShape'
 import type { BoardUpdate } from '@/model/board/Update'
+import './ObjectBlock.css'
 
 export class ObjectBlock extends SidebarBlock {
   constructor(controller: UiController, objName: string) {

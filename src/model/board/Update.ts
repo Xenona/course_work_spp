@@ -38,7 +38,6 @@ export type BoardSetImageUpdate = BaseBoardUpdate<'setImage'> & {
   height: number
 }
 
-
 export type BoardShapeUpdate = BaseBoardUpdate<'setShape'> & {
   shape?: 'rect' | 'circle'
   width?: number
@@ -46,6 +45,10 @@ export type BoardShapeUpdate = BaseBoardUpdate<'setShape'> & {
   filled?: boolean
 }
 
+export type BoardAnimationUpdate = BaseBoardUpdate<'setAnimation'> & {
+  speed?: number
+  frameShift?: number
+}
 
 export type BoardUpdate =
   | BoardGroupUpdate
@@ -56,3 +59,4 @@ export type BoardUpdate =
   | BoardSetImageUpdate
   | BoardMoveUpdate
   | BoardShapeUpdate
+  | BoardAnimationUpdate

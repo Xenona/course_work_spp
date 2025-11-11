@@ -35,46 +35,54 @@ export function write_BoardSetImageUpdate(w, s) {
 export function write_BoardShapeUpdate(w, s) {
 throw new Error('OKFAIL Not supported');}
 
+export function write_BoardAnimationUpdate(w, s) {
+throw new Error('OKFAIL Not supported');}
+
 export function write_BoardUpdate(w, s) {
   switch(s.type) {
   case "addMember":
-    w.writeBits(0, 3);
+    w.writeBits(0, 4);
     write_BoardGroupUpdate(w, s);
     break;
 
   case "addObject":
-    w.writeBits(1, 3);
+    w.writeBits(1, 4);
     write_BoardAddUpdate(w, s);
     break;
 
   case "deleteObject":
-    w.writeBits(2, 3);
+    w.writeBits(2, 4);
     write_BoardDeleteUpdate(w, s);
     break;
 
   case "setStroke":
-    w.writeBits(3, 3);
+    w.writeBits(3, 4);
     write_BoardStrokeUpdate(w, s);
     break;
 
   case "move":
-    w.writeBits(4, 3);
+    w.writeBits(4, 4);
     write_BoardMoveUpdate(w, s);
     break;
 
   case "addPoint":
-    w.writeBits(5, 3);
+    w.writeBits(5, 4);
     write_BoardAddPointUpdate(w, s);
     break;
 
   case "setImage":
-    w.writeBits(6, 3);
+    w.writeBits(6, 4);
     write_BoardSetImageUpdate(w, s);
     break;
 
   case "setShape":
-    w.writeBits(7, 3);
+    w.writeBits(7, 4);
     write_BoardShapeUpdate(w, s);
+    break;
+
+  case "setAnimation":
+    w.writeBits(8, 4);
+    write_BoardAnimationUpdate(w, s);
     break;
 
   }
@@ -132,8 +140,11 @@ export function read_BoardSetImageUpdate(r) {
 export function read_BoardShapeUpdate(r) {
 throw new Error('OKFAIL Not supported');}
 
+export function read_BoardAnimationUpdate(r) {
+throw new Error('OKFAIL Not supported');}
+
 export function read_BoardUpdate(r) {
-  switch(r.readBits(3)) {
+  switch(r.readBits(4)) {
   case 0:
     return read_BoardGroupUpdate(r);
 
@@ -157,6 +168,9 @@ export function read_BoardUpdate(r) {
 
   case 7:
     return read_BoardShapeUpdate(r);
+
+  case 8:
+    return read_BoardAnimationUpdate(r);
 
   }
 }

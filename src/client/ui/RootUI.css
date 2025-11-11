@@ -49,6 +49,13 @@ button {
   }
 }
 
+input[type='number'] {
+  width: 80px;
+  text-align: right;
+  padding: 5px 5px;
+  box-sizing: border-box;
+}
+
 /* .div1 {
 }
 .div2 {
