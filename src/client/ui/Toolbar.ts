@@ -29,6 +29,21 @@ export class Toolbar {
       this.buttons.set(t.name, button)
     }
 
+    const gap = document.createElement('div')
+    gap.style.flex = '1'
+    this._root.append(gap);
+
+    {
+      const button = document.createElement('button')
+      button.textContent = 'arrow_back'
+      button.classList.add('material-icons')
+      button.style.alignSelf = 'flex-end'
+      button.addEventListener('click', () => {
+        window.location.href += '/../..'
+      })
+      this._root.append(button)
+    }
+
     this.controller.tool.addEventListener('change', this.update)
     this.update()
 

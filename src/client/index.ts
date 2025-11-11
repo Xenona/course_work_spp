@@ -17,7 +17,7 @@ const board = new Board()
 
 const dispatcher = new UpdateDispatcher()
 new BoardDispatcher(board, dispatcher)
-new WebsocketDispatcher('/ws', dispatcher)
+new WebsocketDispatcher(location.href + '/ws', dispatcher)
 
 const uiController = new UiController(board, dispatcher)
 uiController.tool.addTool(new UiSelectionTool(uiController))
