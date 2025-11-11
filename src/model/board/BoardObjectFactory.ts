@@ -5,6 +5,7 @@ import { BoardAnimation } from './objects/BoardAnimation'
 import { BoardDrawing } from './objects/BoardDrawing'
 import { BoardImage } from './objects/BoardImage'
 import { BoardShape } from './objects/BoardShape'
+import { BoardSpoiler } from './objects/BoardSpoiler'
 import type { BoardAddUpdate } from './Update'
 
 export class BoardObjectFactory {
@@ -16,6 +17,7 @@ export class BoardObjectFactory {
     this.registry.set('group', BoardGroup)
     this.registry.set('drawing', BoardDrawing)
     this.registry.set('animation', BoardAnimation)
+    this.registry.set('spoiler', BoardSpoiler)
   }
 
   construct(board: Board, update: BoardAddUpdate): BoardObject {

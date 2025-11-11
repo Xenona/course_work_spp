@@ -7,7 +7,8 @@ const ICON_MAPPING: Record<string, string> = {
   move: 'open_with',
   brush: 'brush',
   image: 'image',
-  shape: 'rectangle'
+  shape: 'rectangle',
+  spoiler: 'visibility_off',
 }
 
 export class Toolbar {

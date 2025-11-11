@@ -23,8 +23,9 @@ export class Renderer {
   protected position: [number, number] = [0, 0]
 
   protected overlays: IRendererOverlay[]
-
   protected factory: WrappingFactory<typeof BoardObject, typeof ObjectRenderer>
+
+  protected endFrameCallbacks: (() => void)[] = []
 
   constructor(canvas: HTMLCanvasElement, board: Board) {
     this.canvas = canvas
@@ -71,6 +72,7 @@ export class Renderer {
 
   render() {
     try {
+      this.endFrameCallbacks = []
       this.ctx.reset()
       this.ctx.translate(this.width / 2, this.height / 2)
       this.ctx.translate(this.position[0], this.position[1])
@@ -83,6 +85,8 @@ export class Renderer {
       for (const overlay of this.overlays) {
         overlay.draw(this.ctx)
       }
+
+      this.endFrameCallbacks.forEach(cb => cb())
     } catch(e) {
       this.shouldRun = false;
       throw e;
@@ -99,5 +103,9 @@ export class Renderer {
 
     requestAnimationFrame(() => this.runner())
     this.render()
+  }
+
+  onFrameEnd(cb: () => void) {
+    this.endFrameCallbacks.push(cb)
   }
 }

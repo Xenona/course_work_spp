@@ -2,6 +2,7 @@ import { BoardObject, generateRandomId } from '@/model/board/BoardObject'
 import type { UiController } from '../controller/UiController'
 import type { BoardMouseEvent } from '../controller/UiMouseController'
 import { UiBaseTool } from './UiBaseTool'
+import type { BoardAddUpdate } from '@/model/board/Update'
 
 export class UiShapeTool extends UiBaseTool {
   private startPos: [number, number] | null
@@ -41,11 +42,8 @@ export class UiShapeTool extends UiBaseTool {
     this.startPos = null
 
     const id = generateRandomId()
-    this.controller.updateDispatcher.update({
-      type: 'addObject',
-      kind: 'shape',
-      id,
-    })
+    
+    this.createObject(id)
     this.controller.updateDispatcher.update({
       type: 'move',
       id,
@@ -77,5 +75,13 @@ export class UiShapeTool extends UiBaseTool {
       ctx.lineWidth = this.controller.stroke.size
       ctx.strokeRect(x1, y1, x2 - x1, y2 - y1)
     }
+  }
+
+  protected createObject(id: string) {
+    this.controller.updateDispatcher.update({
+      type: 'addObject',
+      kind: 'shape',
+      id,
+    })
   }
 }

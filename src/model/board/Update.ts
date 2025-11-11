@@ -8,7 +8,7 @@ export type BoardGroupUpdate = {
 
 export type BoardAddUpdate = {
   type: 'addObject'
-  kind: 'drawing' | 'group' | 'animation' | 'image' | 'shape'
+  kind: 'drawing' | 'group' | 'animation' | 'image' | 'shape' | 'spoiler'
   id: string
 }
 
