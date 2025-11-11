@@ -10,15 +10,18 @@ import type {
   BoardGroupUpdate,
   BoardUpdate,
 } from './Update'
+import { BoardObjectFactory } from './BoardObjectFactory'
 
 export class Board {
   objects: Map<string, BoardObject>
   rootGroup: BoardGroup
+  private objectFactory: BoardObjectFactory;
 
   constructor() {
     this.objects = new Map()
     this.rootGroup = new BoardGroup(this, 'root')
     this.objects.set(this.rootGroup.id, this.rootGroup)
+    this.objectFactory = new BoardObjectFactory()
   }
 
   update(update: BoardUpdate): boolean {
@@ -40,21 +43,7 @@ export class Board {
   }
 
   private handleAddObject(update: BoardAddUpdate): boolean {
-    let obj: BoardObject
-    if (update.kind == 'drawing') {
-      obj = new BoardDrawing(this, update.id)
-    } else if (update.kind == 'group') {
-      obj = new BoardGroup(this, update.id)
-    } else if (update.kind == 'animation') {
-      obj = new BoardAnimation(this, update.id)
-    } else if (update.kind == 'image') {
-      obj = new BoardImage(this, update.id)
-    } else if (update.kind == 'shape') {
-      obj = new BoardShape(this, update.id)
-    } else {
-      console.warn('Unknown kind', update.kind)
-      return false
-    }
+    const obj = this.objectFactory.construct(this, update)
     this.objects.set(obj.id, obj)
     obj.parent = this.rootGroup.id
     this.rootGroup.objects.push(obj.id)

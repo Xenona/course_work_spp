@@ -3,15 +3,11 @@ import type { Board } from '../model/board/Board'
 import { BoardDrawing } from '../model/board/objects/BoardDrawing'
 import { BoardGroup } from '../model/board/BoardGroup'
 import type { BoardObject } from '../model/board/BoardObject'
-import { AnimationRenderer } from './AnimationRenderer'
-import { DrawingRenderer } from './DrawingRenderer'
-import { GroupRenderer } from './GroupRenderer'
 import type { IRendererOverlay } from './IRendererOverlay'
 import type { ObjectRenderer } from './ObjectRenderer'
-import { ImageRenderer } from './ImageRenderer'
 import { BoardImage } from '@/model/board/objects/BoardImage'
 import { BoardShape } from '@/model/board/objects/BoardShape'
-import { ShapeRenderer } from './ShapeRenderer'
+import { WrappingFactory } from '@/WrappingFactory'
 
 export class Renderer {
   protected canvas: HTMLCanvasElement
@@ -28,6 +24,8 @@ export class Renderer {
 
   protected overlays: IRendererOverlay[]
 
+  protected factory: WrappingFactory<typeof BoardObject, typeof ObjectRenderer>
+
   constructor(canvas: HTMLCanvasElement, board: Board) {
     this.canvas = canvas
     this.ctx = canvas.getContext('2d')!
@@ -37,6 +35,11 @@ export class Renderer {
     this.board = board
     this.renderers = new Map()
     this.overlays = []
+    this.factory = new WrappingFactory()
+  }
+
+  registerRenderer<T extends typeof BoardObject>(a: T, b: typeof ObjectRenderer<InstanceType<T>>) {
+    this.factory.register(a, b as typeof ObjectRenderer)
   }
 
   get width() {
@@ -58,36 +61,31 @@ export class Renderer {
   getObjectRenderer(id: string) {
     if (!this.renderers.has(id)) {
       const object = this.board.objects.get(id)
-      if (object instanceof BoardDrawing) {
-        this.renderers.set(object.id, new DrawingRenderer(object))
-      } else if (object instanceof BoardImage) {
-        this.renderers.set(object.id, new ImageRenderer(object))
-      } else if (object instanceof BoardShape) {
-        this.renderers.set(object.id, new ShapeRenderer(object))
-      } else if (object instanceof BoardAnimation) {
-        this.renderers.set(object.id, new AnimationRenderer(object))
-      } else if (object instanceof BoardGroup) {
-        this.renderers.set(object.id, new GroupRenderer(object))
-      } else {
-        throw new Error('Unknown object ' + id + ' ' + object)
-      }
+      if (!object) throw new Error('Object not found')
+
+      this.renderers.set(id, this.factory.construct(object))
     }
 
     return this.renderers.get(id)
   }
 
   render() {
-    this.ctx.reset()
-    this.ctx.translate(this.width / 2, this.height / 2)
-    this.ctx.translate(this.position[0], this.position[1])
-
-    this.ctx.clearRect(0, 0, this.width, this.height)
-
-    const rootId = this.board.rootGroup
-    this.getObjectRenderer(rootId.id)!.render(this, this.ctx)
-
-    for (const overlay of this.overlays) {
-      overlay.draw(this.ctx)
+    try {
+      this.ctx.reset()
+      this.ctx.translate(this.width / 2, this.height / 2)
+      this.ctx.translate(this.position[0], this.position[1])
+  
+      this.ctx.clearRect(0, 0, this.width, this.height)
+  
+      const rootId = this.board.rootGroup
+      this.getObjectRenderer(rootId.id)!.render(this, this.ctx)
+  
+      for (const overlay of this.overlays) {
+        overlay.draw(this.ctx)
+      }
+    } catch(e) {
+      this.shouldRun = false;
+      throw e;
     }
   }
 

@@ -15,6 +15,17 @@ import { SelectionUpdater } from './features/SelectionUpdater'
 import { UiImageTool } from './tool/UiImageTool'
 import { UiMoveTool } from './tool/UiMoveTool'
 import { UiShapeTool } from './tool/UiShapeTool'
+import { AnimationRenderer } from '../renderer/AnimationRenderer'
+import { DrawingRenderer } from '../renderer/DrawingRenderer'
+import { GroupRenderer } from '../renderer/GroupRenderer'
+import { ShapeRenderer } from '../renderer/ShapeRenderer'
+import { ImageRenderer } from '../renderer/ImageRenderer'
+import { BoardImage } from '@/model/board/objects/BoardImage'
+import { BoardShape } from '@/model/board/objects/BoardShape'
+import { BoardGroup } from '@/model/board/BoardGroup'
+import { BoardDrawing } from '@/model/board/objects/BoardDrawing'
+import { BoardAnimation } from '@/model/board/objects/BoardAnimation'
+import { BoardObjectFactory } from '@/model/board/BoardObjectFactory'
 
 const board = new Board()
 
@@ -41,7 +52,13 @@ const root = new RootUI(uiController)
 root.attach(document.body)
 
 const renderer = root.addRenderer((canvas) => {
-  return new Renderer(canvas, board)
+  const renderer = new Renderer(canvas, board)
+  renderer.registerRenderer(BoardAnimation, AnimationRenderer)
+  renderer.registerRenderer(BoardDrawing, DrawingRenderer)
+  renderer.registerRenderer(BoardGroup, GroupRenderer)
+  renderer.registerRenderer(BoardShape, ShapeRenderer)
+  renderer.registerRenderer(BoardImage, ImageRenderer)
+  return renderer
 })
 renderer.start()
 
