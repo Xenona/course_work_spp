@@ -10,6 +10,8 @@ import { RootUI } from './ui/RootUI'
 import 'material-icons/iconfont/material-icons.css'
 import { BoardDispatcher } from '@/dispatcher/BoardDispatcher'
 import { WebsocketDispatcher } from '@/dispatcher/WebsocketDispatcher'
+import { UiSelectionTool } from './tool/UiSelectionTool'
+import { SelectionUpdater } from './features/SelectionUpdater'
 
 const board = new Board()
 
@@ -17,10 +19,13 @@ const dispatcher = new UpdateDispatcher()
 new BoardDispatcher(board, dispatcher)
 new WebsocketDispatcher('/ws', dispatcher)
 
-const uiController = new UiController(dispatcher)
+const uiController = new UiController(board, dispatcher)
+uiController.tool.addTool(new UiSelectionTool(uiController))
 uiController.tool.addMoveTool(new UiMoveTool(uiController))
 uiController.tool.addTool(new UiBrushTool(uiController))
 uiController.tool.selectTool(uiController.tool.tools[0])
+
+new SelectionUpdater(uiController)
 
 const root = new RootUI(uiController)
 root.attach(document.body)

@@ -5,6 +5,9 @@ export interface ITool {
   mouseMove(e: BoardMouseEvent): void
   mouseUp(e: BoardMouseEvent): void
 
+  activate(): void
+  deactivate(): void
+
   name: string
 }
 
@@ -31,7 +34,9 @@ export class UiToolController extends EventTarget {
   }
 
   selectTool(tool: ITool) {
+    this.currentTool?.deactivate()
     this.currentTool = tool
+    this.currentTool?.activate()
     this.dispatchEvent(new CustomEvent('change'))
   }
 }

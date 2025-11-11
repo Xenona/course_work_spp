@@ -4,6 +4,7 @@ import { BoardGroup } from '../model/board/BoardGroup'
 import type { BoardObject } from '../model/board/BoardObject'
 import { DrawingRenderer } from './DrawingRenderer'
 import { GroupRenderer } from './GroupRenderer'
+import type { IRendererOverlay } from './IRendererOverlay'
 import type { ObjectRenderer } from './ObjectRenderer'
 
 export class Renderer {
@@ -19,6 +20,8 @@ export class Renderer {
 
   protected position: [number, number] = [0, 0]
 
+  protected overlays: IRendererOverlay[]
+
   constructor(canvas: HTMLCanvasElement, board: Board) {
     this.canvas = canvas
     this.ctx = canvas.getContext('2d')!
@@ -27,6 +30,7 @@ export class Renderer {
 
     this.board = board
     this.renderers = new Map()
+    this.overlays = []
   }
 
   get width() {
@@ -39,6 +43,10 @@ export class Renderer {
 
   setPosition(position: [number, number]) {
     this.position = position
+  }
+
+  addOverlay(overlay: IRendererOverlay) {
+    this.overlays.push(overlay)
   }
 
   private addObject(object: BoardObject) {
@@ -70,6 +78,10 @@ export class Renderer {
 
     for (const renderer of this.renderers.values()) {
       renderer.render(this, this.ctx)
+    }
+
+    for(const overlay of this.overlays) {
+      overlay.draw(this.ctx)
     }
   }
 

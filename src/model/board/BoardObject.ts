@@ -1,3 +1,5 @@
+import type { BoardStroke } from "./BoardStroke"
+
 export function generateRandomId() {
   const parts = []
   for (let i = 0; i < 4; i++) {
@@ -8,6 +10,7 @@ export function generateRandomId() {
 
 export class BoardObject {
   id: string
+  stroke: BoardStroke | undefined
 
   constructor(id: string) {
     this.id = id
@@ -15,5 +18,9 @@ export class BoardObject {
 
   update(update: {}): boolean {
     return false
+  }
+
+  getBoundingRect() {
+    return { cx: 0, cy: 0, w: 0, h: 0 }
   }
 }

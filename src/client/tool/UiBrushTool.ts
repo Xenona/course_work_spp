@@ -49,6 +49,11 @@ export class UiBrushTool extends UiBaseTool {
     this.currentDrawing = null
   }
 
+  activate(): void {
+    this.controller.selection.deselect()
+    super.activate()
+  }
+
   get name(): string {
     return 'brush'
   }

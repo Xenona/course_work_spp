@@ -2,6 +2,7 @@ import type { UiController } from '../controller/UiController'
 import './Toolbar.css'
 
 const ICON_MAPPING: Record<string, string> = {
+  selection: 'near_me',
   move: 'open_with',
   brush: 'brush',
 }
@@ -36,6 +37,7 @@ export class Toolbar {
 
       if (e.key == 'b') targetTool = 'brush'
       if (e.key == 'm') targetTool = 'move'
+      if (e.key == 's') targetTool = 'selection'
 
       if (targetTool) {
         const tool = controller.tool.tools.find((e) => e.name == targetTool)

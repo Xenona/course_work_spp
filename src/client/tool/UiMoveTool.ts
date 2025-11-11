@@ -9,4 +9,9 @@ export class UiMoveTool extends UiBaseTool {
   get name(): string {
     return 'move'
   }
+
+  activate(): void {
+    this.controller.selection.deselect()
+    super.activate()
+  }
 }

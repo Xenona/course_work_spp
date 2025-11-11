@@ -23,4 +23,24 @@ export class BoardDrawing extends BoardObject {
 
     return super.update(update)
   }
+
+  getBoundingRect() {
+    let minX = Infinity
+    let minY = Infinity
+    let maxX = -Infinity
+    let maxY = -Infinity
+
+    for (let point of this.points) {
+      minX = Math.min(minX, point[0])
+      minY = Math.min(minY, point[1])
+      maxX = Math.max(maxX, point[0])
+      maxY = Math.max(maxY, point[1])
+    }
+    return {
+      cx: (maxX + minX) / 2,
+      cy: (maxY + minY) / 2,
+      w: maxX - minX + this.stroke.size,
+      h: maxY - minY + this.stroke.size,
+    }
+  }
 }

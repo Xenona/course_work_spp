@@ -28,7 +28,6 @@ export class UiMouseController extends EventTarget {
   }
 
   deliverMove(e: BoardMouseEvent) {
-    console.log('moove', e, this.tool.currentTool)
     if (e.isMiddleDown) this.tool.moveTool?.mouseMove(e)
     else this.tool.currentTool?.mouseMove(e)
     // this.dispatchEvent(new CustomEvent('move', { detail: e }))
