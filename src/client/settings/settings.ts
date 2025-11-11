@@ -76,8 +76,10 @@ async function bootstrap() {
 
   const msgDiv = document.getElementById("msg") as HTMLDivElement;
   const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
+  const delBtn = document.getElementById("delBtn") as HTMLButtonElement;
+  
   const back = document.getElementById('backLink') as HTMLLinkElement;
-  const parts = location.pathname.split('/').filter(Boolean);   // ["boards","123e...", "settings"]
+  const parts = location.pathname.split('/').filter(Boolean);
   parts.pop();
   if (back !== null) {
     console.log("NUNUNUNU")
@@ -96,6 +98,52 @@ async function bootstrap() {
     return;
   }
 
+ delBtn.addEventListener('click', async (e) => {
+  e.preventDefault();
+
+  const confirmed = confirm(
+    '⚠️  Are you sure you want to permanently delete this board?\n' +
+    'All board data, updates and settings will be lost.',
+  );
+  if (!confirmed) return;
+
+  delBtn.disabled = true;
+  delBtn.textContent = '⏳ Deleting…';
+  msgDiv.textContent = '';
+  msgDiv.style.color = '';
+
+  try {
+    const boardId = getBoardUuid();
+    const resp = await fetch(`/boards/${boardId}/settings/del`, {
+      method: 'POST',              
+      credentials: 'include',      
+      headers: { 'Accept': 'application/json' },
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error ?? `Server returned ${resp.status}`);
+    }
+
+    const data = await resp.json();
+    console.log('🗑️ Delete response:', data);
+
+
+    msgDiv.textContent = '✅ Board deleted – returning to board list…';
+    msgDiv.style.color = 'green';
+
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 1500);
+  } catch (err: any) {
+    console.error('❌ Delete failed:', err);
+    msgDiv.textContent = `❌ ${err.message}`;
+    msgDiv.style.color = 'red';
+    delBtn.disabled = false;
+    delBtn.textContent = 'Delete board';
+  }
+});
+
   saveBtn.addEventListener("click", async (ev) => {
     ev.preventDefault();
     saveBtn.disabled = true;
@@ -103,7 +151,7 @@ async function bootstrap() {
     msgDiv.textContent = "";
     try {
       const updated = await saveSettings(boardId);
-      fillForm(updated); // keep UI in sync with what the server returned
+      fillForm(updated);
       msgDiv.textContent = "✅ Settings saved!";
       msgDiv.style.color = "green";
     } catch (err: any) {

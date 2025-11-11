@@ -30,6 +30,48 @@ export class SettingsManager {
     }))[0]
   }
 
+  async deleteBoard(boardId: string): Promise<boolean> {
+    const boardResult = await this.client.execute(
+      "SELECT * FROM board_list WHERE boardid = ?",
+      [boardId],
+    );
+
+    if (boardResult.rowLength === 0) {
+      return false;
+    }
+
+    const boardRow = boardResult.first() as unknown as BoardInMenu;
+    const settingId = boardRow.setting;
+
+    const statements = [
+      {
+        query: "DELETE FROM board_list WHERE boardid = ?",
+        params: [boardId],
+      },
+      {
+        query: "DELETE FROM settings WHERE settings_id = ?",
+        params: [settingId],
+      }
+     
+    ];
+
+    try {
+      await this.client.batch(
+        statements.map((s) => ({
+          query: s.query,
+          params: s.params,
+        })),
+        { prepare: true }, 
+      );
+    } catch (err) {
+      console.error("Failed to delete board:", err);
+      throw new Error("Unable to delete board – see server logs");
+    }
+
+    return true;
+  }
+
+
   async updateSettings(
     boardid: string,
     theme: boolean,
@@ -58,6 +100,37 @@ export class SettingsManager {
   getRoutes() {
     return {
       "/boards/:uuid/settings": settings,
+      "/boards/:uuid/settings/del":async (req: Bun.BunRequest) => {
+        const match = req.url.split('/')[4];
+        console.log("DE:", match)
+        if (!match) {
+          return new Response(
+            JSON.stringify({ error: "Invalid URL – board UUID missing" }),
+            { status: 400, headers: { "Content-Type": "application/json" } },
+          );
+        }
+        const boardId = match;
+
+        try {
+          const deleted = await this.deleteBoard(boardId);
+          if (!deleted) {
+            return new Response(
+              JSON.stringify({ error: "Board not found" }),
+              { status: 404, headers: { "Content-Type": "application/json" } },
+            );
+          }
+          return new Response(
+            JSON.stringify({ success: true, message: "Board removed" }),
+            { status: 200, headers: { "Content-Type": "application/json" } },
+          );
+        } catch (e) {
+          console.error("Delete endpoint error:", e);
+          return new Response(
+            JSON.stringify({ error: "Failed to delete board" }),
+            { status: 500, headers: { "Content-Type": "application/json" } },
+          );
+        }
+      },
       "/boards/:uuid/settings/get": async (req: Bun.BunRequest) => {
         if (req.method !== "GET") {
           return new Response(
