@@ -12,6 +12,7 @@ import { BoardDispatcher } from '@/dispatcher/BoardDispatcher'
 import { WebsocketDispatcher } from '@/dispatcher/WebsocketDispatcher'
 import { UiSelectionTool } from './tool/UiSelectionTool'
 import { SelectionUpdater } from './features/SelectionUpdater'
+import { UiImageTool } from './tool/UiImageTool'
 
 const board = new Board()
 
@@ -23,6 +24,7 @@ const uiController = new UiController(board, dispatcher)
 uiController.tool.addTool(new UiSelectionTool(uiController))
 uiController.tool.addMoveTool(new UiMoveTool(uiController))
 uiController.tool.addTool(new UiBrushTool(uiController))
+uiController.tool.addTool(new UiImageTool(uiController))
 uiController.tool.selectTool(uiController.tool.tools[0])
 
 new SelectionUpdater(uiController)

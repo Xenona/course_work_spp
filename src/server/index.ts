@@ -1,27 +1,42 @@
-import { serve, type ServerWebSocket } from 'bun'
+import { serve, type ServerWebSocket, S3Client } from 'bun'
 import uiIndex from '@/client/index.html'
 import menuIndex from '@/menu/ui/index.html'
 import cassandra from 'cassandra-driver'
 import { UpdatesSaver } from './UpdatesSaver'
 import { ServerMenu } from '../menu/server/Menu'
+import { AssetApi } from './UploadApi'
+
 
 const boardU = '0196923f-16d2-7000-a809-e308a0fd11b0'
 
 export class Server {
   rooms: Map<string, Set<ServerWebSocket<unknown>>> = new Map()
   client: cassandra.Client
+  s3: Bun.S3Client
+  
   updatesSaver: UpdatesSaver
   serverMenu: ServerMenu
+  uploader: AssetApi
 
   constructor() {
     this.client = new cassandra.Client({
-      contactPoints: ['172.18.0.2'],
+      contactPoints: ['172.18.0.3'],
       localDataCenter: 'datacenter1',
       keyspace: 'boardy',
     })
 
+    this.s3 = new S3Client({
+      accessKeyId: process.env.S3_ACCESS_TOKEN,
+      secretAccessKey: process.env.S3_SECRET_KEY,
+      bucket: "boardy",
+      // sessionToken: "..."
+      // acl: "public-read",
+      endpoint: "http://localhost:9000", // MinIO
+    });
+
     this.updatesSaver = new UpdatesSaver(this.client)
     this.serverMenu = new ServerMenu(this.client)
+    this.uploader = new AssetApi(this.s3)
   }
 
   async connect() {
@@ -42,6 +57,7 @@ export class Server {
           return new Response('Upgrade failed', { status: 500 })
         },
         ...this.serverMenu.getRoutes(),
+        ...this.uploader.getRoutes()
       },
       websocket: {
         async open(ws: ServerWebSocket<{ uuid: string }>) {

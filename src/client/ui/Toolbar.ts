@@ -5,6 +5,7 @@ const ICON_MAPPING: Record<string, string> = {
   selection: 'near_me',
   move: 'open_with',
   brush: 'brush',
+  image: 'image',
 }
 
 export class Toolbar {

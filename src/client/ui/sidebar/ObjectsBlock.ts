@@ -72,16 +72,12 @@ export class ObjectsBlock extends SidebarBlock {
     buttonCnt.append(animBtn)
 
     const deleteBtn = createIconButton('delete')
-    deleteBtn.addEventListener('click', () => {
-      for (const sel of this.controller.selection.selectedId) {
-        this.controller.updateDispatcher.update({
-          type: 'deleteObject',
-          id: sel,
-        })
-      }
-      this.controller.selection.deselect()
-    })
+    deleteBtn.addEventListener('click', () => this.deleteSelected())
     buttonCnt.append(deleteBtn)
+
+    document.body.addEventListener('keydown', (e) => {
+      if (e.key == 'Delete') this.deleteSelected()
+    })
 
     this.objectList = document.createElement('div')
     this.objectList.classList.add('objectList')
@@ -167,6 +163,16 @@ export class ObjectsBlock extends SidebarBlock {
       })
     }
 
+    this.controller.selection.deselect()
+  }
+
+  deleteSelected() {
+    for (const sel of this.controller.selection.selectedId) {
+      this.controller.updateDispatcher.update({
+        type: 'deleteObject',
+        id: sel,
+      })
+    }
     this.controller.selection.deselect()
   }
 }

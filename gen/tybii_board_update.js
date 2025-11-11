@@ -19,6 +19,15 @@ export function write_BoardAddPointUpdate(w, s) {
   w.writeNumber(s.pointY);
 }
 
+export function write_BoardSetImageUpdate(w, s) {
+  w.writeId(s.id);
+  w.writeString(s.src);
+  w.writeNumber(s.width);
+  w.writeNumber(s.height);
+  w.writeNumber(s.posX);
+  w.writeNumber(s.posY);
+}
+
 export function write_BoardUpdate(w, s) {
   switch(s.type) {
   case "addMember":
@@ -44,6 +53,11 @@ export function write_BoardUpdate(w, s) {
   case "addPoint":
     w.writeBits(4, 3);
     write_BoardAddPointUpdate(w, s);
+    break;
+
+  case "setImage":
+    w.writeBits(5, 3);
+    write_BoardSetImageUpdate(w, s);
     break;
 
   }
@@ -79,6 +93,18 @@ export function read_BoardAddPointUpdate(r) {
   return s;
 }
 
+export function read_BoardSetImageUpdate(r) {
+  const s = {};
+  s.id = r.readId();
+  s.type = "setImage";
+  s.src = r.readString();
+  s.width = r.readNumber();
+  s.height = r.readNumber();
+  s.posX = r.readNumber();
+  s.posY = r.readNumber();
+  return s;
+}
+
 export function read_BoardUpdate(r) {
   switch(r.readBits(3)) {
   case 0:
@@ -95,6 +121,9 @@ export function read_BoardUpdate(r) {
 
   case 4:
     return read_BoardAddPointUpdate(r);
+
+  case 5:
+    return read_BoardSetImageUpdate(r);
 
   }
 }

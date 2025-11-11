@@ -1,6 +1,7 @@
 import { BoardAnimation } from './BoardAnimation'
 import { BoardDrawing } from './BoardDrawing'
 import { BoardGroup } from './BoardGroup'
+import { BoardImage } from './BoardImage'
 import type { BoardObject } from './BoardObject'
 import type {
   BoardAddUpdate,
@@ -45,6 +46,8 @@ export class Board {
       obj = new BoardGroup(this, update.id)
     } else if (update.kind == 'animation') {
       obj = new BoardAnimation(this, update.id)
+    } else if (update.kind == 'image') {
+      obj = new BoardImage(this, update.id)
     } else {
       console.warn('Unknown kind', update.kind)
       return false
