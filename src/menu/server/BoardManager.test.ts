@@ -2,16 +2,11 @@ import { beforeAll, beforeEach, expect, test } from 'bun:test'
 import cassandra from 'cassandra-driver'
 import { BoardManager } from './BoardManager'
 
-// import { BoardGroup } from '../BoardGroup'
-// import { generateRandomId } from '../BoardObject'
-// import { createBoardAndGroup } from './Board.test'
-// import { Board } from '../Board'
-
 let client: cassandra.Client
 
 beforeAll(async () => {
   client = new cassandra.Client({
-    contactPoints: ['172.18.0.2'],
+    contactPoints: [process.env.SCYLLA_ENDPOINT ?? ''],
     localDataCenter: 'datacenter1',
     keyspace: 'test',
   })

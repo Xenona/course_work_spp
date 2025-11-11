@@ -20,7 +20,7 @@ export class Server {
 
   constructor() {
     this.client = new cassandra.Client({
-      contactPoints: ['172.18.0.3'],
+      contactPoints: [process.env.SCYLLA_ENDPOINT ?? ''],
       localDataCenter: 'datacenter1',
       keyspace: 'boardy',
     })
@@ -29,9 +29,7 @@ export class Server {
       accessKeyId: process.env.S3_ACCESS_TOKEN,
       secretAccessKey: process.env.S3_SECRET_KEY,
       bucket: "boardy",
-      // sessionToken: "..."
-      // acl: "public-read",
-      endpoint: "http://localhost:9000", // MinIO
+      endpoint: process.env.S3_ENDPOINT, // MinIO
     });
 
     this.updatesSaver = new UpdatesSaver(this.client)
