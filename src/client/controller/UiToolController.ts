@@ -8,6 +8,8 @@ export interface ITool {
   activate(): void
   deactivate(): void
 
+  draw(ctx: CanvasRenderingContext2D): void
+
   name: string
 }
 

@@ -5,6 +5,7 @@ import type { UiController } from '@/client/controller/UiController'
 import { CanvasUI } from './CanvasUI'
 import { Toolbar } from './Toolbar'
 import { UiRendererSelection } from '../renderer/UiRendererSelection'
+import { UiToolOverlay } from '../renderer/UiToolOverlay'
 
 export class RootUI {
   canvas: HTMLCanvasElement
@@ -13,7 +14,9 @@ export class RootUI {
   sideBar: Sidebar
   toolBar: Toolbar
   canvasUI: CanvasUI
-  overlay: UiRendererSelection
+
+  selectionOverlay: UiRendererSelection
+  toolOverlay: UiToolOverlay
 
   constructor(controller: UiController) {
     this.controller = controller
@@ -22,14 +25,17 @@ export class RootUI {
     this.canvasUI = new CanvasUI(controller, this.canvas)
     this.sideBar = new Sidebar(controller)
     this.toolBar = new Toolbar(controller)
-    this.overlay = new UiRendererSelection(controller)
+
+    this.selectionOverlay = new UiRendererSelection(controller)
+    this.toolOverlay = new UiToolOverlay(controller)
   }
 
   addRenderer(
     createRenderer: (canvas: HTMLCanvasElement) => Renderer
   ): Renderer {
     const rend = createRenderer(this.canvas)
-    rend.addOverlay(this.overlay)
+    rend.addOverlay(this.selectionOverlay)
+    rend.addOverlay(this.toolOverlay)
     return rend
   }
 

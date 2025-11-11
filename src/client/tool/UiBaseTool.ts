@@ -26,4 +26,6 @@ export class UiBaseTool implements ITool {
   get name(): string {
     return 'base'
   }
+
+  draw(ctx: CanvasRenderingContext2D): void {}
 }
