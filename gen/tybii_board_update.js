@@ -32,6 +32,9 @@ export function write_BoardSetImageUpdate(w, s) {
   w.writeNumber(s.height);
 }
 
+export function write_BoardShapeUpdate(w, s) {
+throw new Error('OKFAIL Not supported');}
+
 export function write_BoardUpdate(w, s) {
   switch(s.type) {
   case "addMember":
@@ -67,6 +70,11 @@ export function write_BoardUpdate(w, s) {
   case "setImage":
     w.writeBits(6, 3);
     write_BoardSetImageUpdate(w, s);
+    break;
+
+  case "setShape":
+    w.writeBits(7, 3);
+    write_BoardShapeUpdate(w, s);
     break;
 
   }
@@ -121,6 +129,9 @@ export function read_BoardSetImageUpdate(r) {
   return s;
 }
 
+export function read_BoardShapeUpdate(r) {
+throw new Error('OKFAIL Not supported');}
+
 export function read_BoardUpdate(r) {
   switch(r.readBits(3)) {
   case 0:
@@ -143,6 +154,9 @@ export function read_BoardUpdate(r) {
 
   case 6:
     return read_BoardSetImageUpdate(r);
+
+  case 7:
+    return read_BoardShapeUpdate(r);
 
   }
 }

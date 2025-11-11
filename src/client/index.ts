@@ -14,6 +14,7 @@ import { UiSelectionTool } from './tool/UiSelectionTool'
 import { SelectionUpdater } from './features/SelectionUpdater'
 import { UiImageTool } from './tool/UiImageTool'
 import { UiMoveTool } from './tool/UiMoveTool'
+import { UiShapeTool } from './tool/UiShapeTool'
 
 const board = new Board()
 
@@ -31,6 +32,7 @@ uiController.tool.addTool(new UiMoveTool(uiController), {
 })
 uiController.tool.addTool(new UiBrushTool(uiController))
 uiController.tool.addTool(new UiImageTool(uiController))
+uiController.tool.addTool(new UiShapeTool(uiController))
 uiController.tool.selectTool(uiController.tool.tools[0])
 
 new SelectionUpdater(uiController)

@@ -8,7 +8,7 @@ export type BoardGroupUpdate = {
 
 export type BoardAddUpdate = {
   type: 'addObject'
-  kind: 'drawing' | 'group' | 'animation' | 'image'
+  kind: 'drawing' | 'group' | 'animation' | 'image' | 'shape'
   id: string
 }
 
@@ -38,6 +38,14 @@ export type BoardSetImageUpdate = BaseBoardUpdate<'setImage'> & {
   height: number
 }
 
+
+export type BoardShapeUpdate = BaseBoardUpdate<'setShape'> & {
+  shape: 'rect' | 'circle'
+  width: number
+  height: number
+}
+
+
 export type BoardUpdate =
   | BoardGroupUpdate
   | BoardAddUpdate
@@ -46,3 +54,4 @@ export type BoardUpdate =
   | BoardAddPointUpdate
   | BoardSetImageUpdate
   | BoardMoveUpdate
+  | BoardShapeUpdate

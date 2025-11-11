@@ -10,6 +10,8 @@ import type { IRendererOverlay } from './IRendererOverlay'
 import type { ObjectRenderer } from './ObjectRenderer'
 import { ImageRenderer } from './ImageRenderer'
 import { BoardImage } from '@/model/board/objects/BoardImage'
+import { BoardShape } from '@/model/board/objects/BoardShape'
+import { ShapeRenderer } from './ShapeRenderer'
 
 export class Renderer {
   protected canvas: HTMLCanvasElement
@@ -60,6 +62,8 @@ export class Renderer {
         this.renderers.set(object.id, new DrawingRenderer(object))
       } else if (object instanceof BoardImage) {
         this.renderers.set(object.id, new ImageRenderer(object))
+      } else if (object instanceof BoardShape) {
+        this.renderers.set(object.id, new ShapeRenderer(object))
       } else if (object instanceof BoardAnimation) {
         this.renderers.set(object.id, new AnimationRenderer(object))
       } else if (object instanceof BoardGroup) {

@@ -11,6 +11,7 @@ export class UiMoveTool extends UiBaseTool {
 
     if(this.controller.selection.selectedId.length == 0) {
       this.controller.tool.enableNotSelected();
+      this.controller.tool.currentTool?.mouseDown(e)
     }
   }
 

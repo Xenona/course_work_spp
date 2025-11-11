@@ -7,6 +7,7 @@ const ICON_MAPPING: Record<string, string> = {
   move: 'open_with',
   brush: 'brush',
   image: 'image',
+  shape: 'rectangle'
 }
 
 export class Toolbar {
@@ -55,6 +56,7 @@ export class Toolbar {
       if (e.key == 'b') targetTool = 'brush'
       if (e.key == 'm') targetTool = 'move'
       if (e.key == 's') targetTool = 'selection'
+      if (e.key == 'r') targetTool = 'shape'
 
       if (targetTool) {
         const tool = controller.tool.tools.find((e) => e.name == targetTool)
