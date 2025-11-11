@@ -9,6 +9,7 @@ export class BoardShape extends BoardObject {
   stroke: BoardStroke
   width: number
   height: number
+  filled: boolean
 
   constructor(board: Board, id: string) {
     super(board, id)
@@ -16,6 +17,7 @@ export class BoardShape extends BoardObject {
     this.stroke = new BoardStroke()
     this.width = 0
     this.height = 0
+    this.filled = false
   }
 
   update(update: BoardUpdate): boolean {
@@ -28,10 +30,22 @@ export class BoardShape extends BoardObject {
     return super.update(update)
   }
 
-  handleSetShape(update: BoardShapeUpdate) {
-    this.width = update.width
-    this.height = update.height
+  protected handleSetShape(update: BoardShapeUpdate) {
+    if (update.width !== undefined) this.width = update.width
+    if (update.height !== undefined) this.height = update.height
+    if (update.filled !== undefined) this.filled = update.filled
+
     return true
+  }
+
+  getUpdateShape() {
+    return {
+      type: 'setShape',
+      id: this.id,
+      width: this.width,
+      height: this.height,
+      filled: this.filled,
+    } as const
   }
 
   getBoundingRect() {

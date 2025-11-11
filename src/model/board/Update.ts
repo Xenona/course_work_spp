@@ -40,9 +40,10 @@ export type BoardSetImageUpdate = BaseBoardUpdate<'setImage'> & {
 
 
 export type BoardShapeUpdate = BaseBoardUpdate<'setShape'> & {
-  shape: 'rect' | 'circle'
-  width: number
-  height: number
+  shape?: 'rect' | 'circle'
+  width?: number
+  height?: number
+  filled?: boolean
 }
 
 

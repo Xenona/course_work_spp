@@ -58,6 +58,7 @@ export class UiShapeTool extends UiBaseTool {
       width: w,
       height: h,
       shape: 'rect',
+      filled: false,
     })
     this.controller.updateDispatcher.update(this.controller.stroke.generateUpdate(id))
     console.log(id, this.controller.stroke.generateUpdate(id))

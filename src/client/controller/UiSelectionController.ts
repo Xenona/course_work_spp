@@ -1,4 +1,5 @@
 import type { Board } from '@/model/board/Board'
+import type { BoardObject } from '@/model/board/BoardObject'
 
 export class UiSelectionController extends EventTarget {
   selectedId: string[] = []
@@ -47,5 +48,9 @@ export class UiSelectionController extends EventTarget {
       }
     }
     return false
+  }
+
+  get objects() {
+    return this.selectedId.map((id) => this.board.objects.get(id)).filter((e) => e) as BoardObject[]
   }
 }

@@ -11,7 +11,17 @@ export class ShapeRenderer extends ObjectRenderer<BoardShape> {
     ctx.lineWidth = this.target.stroke.size
     ctx.lineCap = 'round'
     ctx.lineJoin = 'round'
-    
+
+    if (this.target.filled) {
+      ctx.fillStyle = this.target.stroke.color
+      ctx.fillRect(
+        this.target.pos.x - this.target.width / 2,
+        this.target.pos.y - this.target.height / 2,
+        this.target.width,
+        this.target.height
+      )
+    }
+
     ctx.strokeRect(
       this.target.pos.x - this.target.width / 2,
       this.target.pos.y - this.target.height / 2,

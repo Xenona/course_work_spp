@@ -58,8 +58,8 @@ export class UiSelectionTool extends UiBaseTool {
             this.controller.selection.addSelected(obj.id)
           } else {
             this.controller.selection.select(obj.id)
+            this.controller.tool.enableSelected()
           }
-          this.controller.tool.enableSelected()
           return
         }
       }
@@ -96,7 +96,7 @@ export class UiSelectionTool extends UiBaseTool {
     if (this.startPos && this.lastPos) {
       const [x1, y1] = this.startPos
       const [x2, y2] = this.lastPos
-      console.log(this.startPos, this.lastPos)
+
       ctx.strokeStyle = 'red'
       ctx.lineWidth = 1
       ctx.strokeRect(x1, y1, x2 - x1, y2 - y1)
