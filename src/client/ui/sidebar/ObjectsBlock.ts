@@ -71,18 +71,27 @@ export class ObjectsBlock extends SidebarBlock {
     })
     buttonCnt.append(animBtn)
 
+    const deleteBtn = createIconButton('delete')
+    deleteBtn.addEventListener('click', () => {
+      for (const sel of this.controller.selection.selectedId) {
+        this.controller.updateDispatcher.update({
+          type: 'deleteObject',
+          id: sel,
+        })
+      }
+      this.controller.selection.deselect()
+    })
+    buttonCnt.append(deleteBtn)
+
     this.objectList = document.createElement('div')
     this.objectList.classList.add('objectList')
     this._root.append(this.objectList)
 
-    controller.updateDispatcher.addEventListener('update', (e) => {
-      const upd = (e as CustomEvent).detail
-      if (upd.type == 'addObject' || upd.type == 'addMember') {
-        this.refreshElements()
-      }
+    controller.updateDispatcher.addEventListener('treeUpdate', () => {
+      this.refreshElements()
     })
 
-    controller.selection.addEventListener('change', (e) => {
+    controller.selection.addEventListener('change', () => {
       for (const el of this.objectEls.values()) {
         el.setSelected(
           this.controller.selection.selectedId.includes(el.targetId)
@@ -96,7 +105,6 @@ export class ObjectsBlock extends SidebarBlock {
       this.objectList.removeChild(this.objectList.lastChild)
 
     const recurse = (e: BoardGroup, level = 0) => {
-      console.log(this.controller.board)
       for (const childId of e.objects) {
         const child = this.controller.board.objects.get(childId)
         if (!child) continue
@@ -138,5 +146,7 @@ export class ObjectsBlock extends SidebarBlock {
         memberId: sel,
       })
     }
+
+    this.controller.selection.deselect()
   }
 }

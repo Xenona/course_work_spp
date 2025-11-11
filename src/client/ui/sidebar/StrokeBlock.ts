@@ -1,7 +1,7 @@
 import type { UiController } from '../../controller/UiController'
 import { SidebarBlock } from './SidebarBlock'
 
-const COLORS = ['black', 'white', 'red', 'green', 'purple', 'orange']
+const COLORS = ['transparent', 'black', 'white', 'red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple']
 
 export class StrokeBlock extends SidebarBlock {
   colorButtons: Map<string, HTMLButtonElement> = new Map()
@@ -30,7 +30,11 @@ export class StrokeBlock extends SidebarBlock {
     for (let color of COLORS) {
       const button = document.createElement('button')
       button.classList.add('colorButton')
-      button.style.backgroundColor = color
+      if(color == 'transparent') {
+        button.classList.add('colorTransparent')
+      } else {
+        button.style.backgroundColor = color
+      }
       button.addEventListener('click', () => {
         controller.stroke.color = color
       })

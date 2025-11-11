@@ -20,47 +20,18 @@ export class UiSelectionTool extends UiBaseTool {
         e.boardY > cy - h / 2 &&
         e.boardY < cy + h / 2
       ) {
-        this.controller.selection.select(obj.id)
+        if(e.isShifted) {
+          this.controller.selection.addSelected(obj.id)
+        } else {
+          this.controller.selection.select(obj.id)
+        }
         return
       }
     }
 
     this.controller.selection.deselect()
-    // console.log('123123')
-    // if (!e.isLeftDown) return
-
-    // const id = generateRandomId()
-    // this.controller.updateDispatcher.update({
-    //   type: 'addObject',
-    //   kind: 'drawing',
-    //   id,
-    // })
-    // this.controller.updateDispatcher.update(
-    //   this.controller.stroke.generateUpdate(id)
-    // )
-
-    // this.controller.updateDispatcher.update({
-    //   type: 'addPoint',
-    //   id,
-    //   point: [e.boardX, e.boardY],
-    // })
-
-    // this.currentDrawing = id
   }
 
-  mouseMove(e: BoardMouseEvent) {
-    // if (this.currentDrawing) {
-    //   this.controller.updateDispatcher.update({
-    //     type: 'addPoint',
-    //     id: this.currentDrawing,
-    //     point: [e.boardX, e.boardY],
-    //   })
-    // }
-  }
-
-  mouseUp(e: BoardMouseEvent) {
-    // this.currentDrawing = null
-  }
 
   get name(): string {
     return 'selection'

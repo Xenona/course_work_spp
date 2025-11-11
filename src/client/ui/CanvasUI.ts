@@ -53,6 +53,7 @@ export class CanvasUI {
       isLeftDown: (e.buttons & 1) != 0,
       isRightDown: (e.buttons & 2) != 0,
       isMiddleDown: (e.buttons & 4) != 0,
+      isShifted: e.shiftKey
     }
   }
 }

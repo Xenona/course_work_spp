@@ -74,8 +74,6 @@ export class Renderer {
     this.ctx.translate(this.position[0], this.position[1])
 
     this.ctx.clearRect(0, 0, this.width, this.height)
-    this.ctx.fillStyle = '#f0f'
-    this.ctx.fillRect(0, 0, 10, 10)
 
     const rootId = this.board.rootGroup
     this.getObjectRenderer(rootId.id)!.render(this, this.ctx)

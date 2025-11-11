@@ -6,9 +6,12 @@ export type BoardMouseEvent = {
   boardY: number
   dx: number
   dy: number
+
   isLeftDown: boolean
   isRightDown: boolean
   isMiddleDown: boolean
+
+  isShifted: boolean
 }
 
 export class UiMouseController extends EventTarget {

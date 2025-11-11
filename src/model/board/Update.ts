@@ -12,6 +12,11 @@ export type BoardAddUpdate = {
   id: string
 }
 
+export type BoardDeleteUpdate = {
+  type: 'deleteObject'
+  id: string
+}
+
 export type BoardStrokeUpdate = BaseBoardUpdate<'setStroke'> & {
   color?: string
   size?: number
@@ -24,5 +29,6 @@ export type BoardAddPointUpdate = BaseBoardUpdate<'addPoint'> & {
 export type BoardUpdate =
   | BoardGroupUpdate
   | BoardAddUpdate
+  | BoardDeleteUpdate
   | BoardStrokeUpdate
   | BoardAddPointUpdate

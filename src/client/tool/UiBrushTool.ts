@@ -13,7 +13,6 @@ export class UiBrushTool extends UiBaseTool {
   }
 
   mouseDown(e: BoardMouseEvent) {
-    console.log('123123')
     if (!e.isLeftDown) return
 
     const id = generateRandomId()

@@ -33,6 +33,15 @@
     box-sizing: border-box;
   }
 
+  .colorButton.colorTransparent {
+    background-color: #fff;
+    &::before {
+      content: 'X';
+      color: red;
+      font-size: 38px;
+    }
+  }
+
   .sizeContainer {
     width: 100%;
     box-sizing: border-box;

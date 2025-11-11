@@ -38,16 +38,23 @@ export class Board {
     } else if (update.type == 'addMember') {
       const obj = this.objects.get(update.id)
       if (!obj) return false
+      const member = this.objects.get(update.memberId)
+      if (!member) return false
 
-      const parent = this.objects.get(obj.parent ?? '')
-      if (parent) {
-        ;(parent as BoardGroup).objects = (parent as BoardGroup).objects.filter(
-          (e) => e != update.memberId
-        )
+      this.removeFromGroup(member)
+      if (obj.update(update)) {
+        member.parent = obj.id
+        return true
+      } else {
+        return false
       }
-      // console.log('Pushing', update.memberId, update.id)
+    } else if (update.type == 'deleteObject') {
+      const obj = this.objects.get(update.id)
+      if (!obj) return false
 
-      return obj.update(update) ?? false
+      this.removeFromGroup(obj)
+      this.objects.delete(update.id)
+      return true
     } else {
       if (this.objects.has(update.id)) {
         if (!this.objects.get(update.id)?.update(update)) {
@@ -60,6 +67,17 @@ export class Board {
         console.warn('unsend update', update)
         return false
       }
+    }
+  }
+
+  private removeFromGroup(obj: BoardObject) {
+    if (!obj) return
+    // console.log('REM GRO', obj.id)
+    const parent = this.objects.get(obj.parent ?? '')
+    if (parent) {
+      ;(parent as BoardGroup).objects = (parent as BoardGroup).objects.filter(
+        (e) => e != obj.id
+      )
     }
   }
 }

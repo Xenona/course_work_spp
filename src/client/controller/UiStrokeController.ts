@@ -37,7 +37,7 @@ export class UiStrokeController extends EventTarget {
     this.dispatchEvent(new Event('change'))
   }
 
-  save() {console.log("Sve")
+  save() {
     this.saves.push({
       color: this.color,
       size: this.size,
@@ -45,7 +45,6 @@ export class UiStrokeController extends EventTarget {
   }
 
   restore() {
-    console.log("Restore")
     const save = this.saves.pop()
     if (save) {
       this.color = save.color

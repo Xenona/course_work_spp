@@ -14,6 +14,8 @@ export class BoardDispatcher {
 
   onUpdate = (e: Event) => {
     const update = (e as CustomEvent).detail
-    this.board.update(update)
+    if(!this.board.update(update)) {
+      console.warn("Unhandled update", update)
+    }
   }
 }

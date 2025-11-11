@@ -5,7 +5,6 @@ export class ObjectRenderer<T extends BoardObject = BoardObject> {
   target: T
 
   constructor(target: T) {
-    console.log(target)
     this.target = target
   }
 
