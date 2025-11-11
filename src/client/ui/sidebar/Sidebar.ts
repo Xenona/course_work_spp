@@ -8,6 +8,7 @@ import { WrappingFactory } from '@/WrappingFactory'
 import type { BoardObject } from '@/model/board/BoardObject'
 import { ShapeBlock } from './objects/ShapeBlock'
 import { AnimationBlock } from './objects/AnimationBlock'
+import { AnchorBlock } from './objects/AnchorBlock'
 
 export class Sidebar {
   private _root: HTMLDivElement
@@ -21,7 +22,11 @@ export class Sidebar {
     this._root.classList.add('sideBarRoot')
 
     this.blocks = [new ObjectsBlock(controller), new StrokeBlock(controller)]
-    this.objectBlocks = [new ShapeBlock(controller), new AnimationBlock(controller)]
+    this.objectBlocks = [
+      new ShapeBlock(controller),
+      new AnimationBlock(controller),
+      new AnchorBlock(controller),
+    ]
 
     this._root.append(...this.blocks.map((e) => e.root))
 

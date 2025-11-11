@@ -23,7 +23,8 @@ export class UiMouseController extends EventTarget {
   }
 
   deliverDown(e: BoardMouseEvent) {
-    this.tool.currentTool?.mouseDown(e)
+    if (e.isMiddleDown) this.tool.panTool?.mouseDown(e)
+    else this.tool.currentTool?.mouseDown(e)
   }
 
   deliverUp(e: BoardMouseEvent) {

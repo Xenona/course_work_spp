@@ -2,6 +2,7 @@ import { BoardObject } from '@/model/board/BoardObject'
 import type { UiController } from '../controller/UiController'
 import type { BoardMouseEvent } from '../controller/UiMouseController'
 import { UiBaseTool } from './UiBaseTool'
+import { BoardAnchor } from '@/model/board/objects/BoardAnchor'
 
 export class UiSelectionTool extends UiBaseTool {
   private startPos: [number, number] | null
@@ -80,7 +81,7 @@ export class UiSelectionTool extends UiBaseTool {
           this.controller.selection.addSelected(obj.id)
         }
       }
-      if(this.controller.selection.selectedId.length > 0) {
+      if (this.controller.selection.selectedId.length > 0) {
         this.controller.tool.enableSelected()
       }
 

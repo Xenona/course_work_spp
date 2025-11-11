@@ -1,6 +1,7 @@
 import type { Board } from './Board'
 import { BoardGroup } from './BoardGroup'
 import type { BoardObject } from './BoardObject'
+import { BoardAnchor } from './objects/BoardAnchor'
 import { BoardAnimation } from './objects/BoardAnimation'
 import { BoardDrawing } from './objects/BoardDrawing'
 import { BoardImage } from './objects/BoardImage'
@@ -9,7 +10,7 @@ import { BoardSpoiler } from './objects/BoardSpoiler'
 import type { BoardAddUpdate } from './Update'
 
 export class BoardObjectFactory {
-  registry: Map<BoardAddUpdate["kind"], any> = new Map()
+  registry: Map<BoardAddUpdate['kind'], any> = new Map()
 
   constructor() {
     this.registry.set('image', BoardImage)
@@ -18,6 +19,7 @@ export class BoardObjectFactory {
     this.registry.set('drawing', BoardDrawing)
     this.registry.set('animation', BoardAnimation)
     this.registry.set('spoiler', BoardSpoiler)
+    this.registry.set('anchor', BoardAnchor)
   }
 
   construct(board: Board, update: BoardAddUpdate): BoardObject {

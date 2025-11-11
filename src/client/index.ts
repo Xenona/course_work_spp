@@ -29,6 +29,9 @@ import { BoardObjectFactory } from '@/model/board/BoardObjectFactory'
 import { UiSpoilerTool } from './tool/UiSpoilerTool'
 import { BoardSpoiler } from '@/model/board/objects/BoardSpoiler'
 import { SpoilerRenderer } from '@/renderer/SpoilerRenderer'
+import { UiAnchorTool } from './tool/UiAnchorTool'
+import { AnchorRenderer } from '@/renderer/AnchorRenderer'
+import { BoardAnchor } from '@/model/board/objects/BoardAnchor'
 
 const board = new Board()
 
@@ -48,6 +51,7 @@ uiController.tool.addTool(new UiBrushTool(uiController))
 uiController.tool.addTool(new UiImageTool(uiController))
 uiController.tool.addTool(new UiShapeTool(uiController))
 uiController.tool.addTool(new UiSpoilerTool(uiController))
+uiController.tool.addTool(new UiAnchorTool(uiController))
 uiController.tool.selectTool(uiController.tool.tools[0])
 
 new SelectionUpdater(uiController)
@@ -63,6 +67,7 @@ const renderer = root.addRenderer((canvas) => {
   renderer.registerRenderer(BoardShape, ShapeRenderer)
   renderer.registerRenderer(BoardImage, ImageRenderer)
   renderer.registerRenderer(BoardSpoiler, SpoilerRenderer)
+  renderer.registerRenderer(BoardAnchor, AnchorRenderer)
   return renderer
 })
 renderer.start()
