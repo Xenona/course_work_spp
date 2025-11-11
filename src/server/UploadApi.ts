@@ -1,3 +1,4 @@
+ 
 export class AssetApi {
   s3: Bun.S3Client
 

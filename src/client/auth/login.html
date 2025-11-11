@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+
+  <link rel="stylesheet" href="./index.css" />
+
+  <script type="module" src="./login.ts"></script>
+</head>
+<body>
+  <div class="root">
+    <h1>Login</h1>
+
+    <div class="formField">
+      <label for="username">Username:</label>
+      <input id="username" type="text" placeholder="Enter username" autocomplete="username" />
+    </div>
+
+    <div class="formField">
+      <label for="password">Password:</label>
+      <input id="password" type="password" placeholder="Enter password" autocomplete="current-password" />
+    </div>
+
+    <div class="formField">
+      <button id="loginBtn">Log in</button>
+    </div>
+     <div class="formField oauth">
+       <button id="oauthBtn" class="oauthBtn">
+         <svg aria-hidden="true" focusable="false" width="1em" height="1em"
+              viewBox="0 0 24 24" style="margin-right:.4rem; vertical-align:middle">
+           <!-- a generic “lock” icon – replace with the provider’s logo if you want -->
+           <path fill="currentColor"
+                 d="M12 2a5 5 0 0 0-5 5v4H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0
+                    0 0 2-2v-9a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5Zm3 9H9V7a3 3 0 0 1
+                    6 0v4Z"/>
+         </svg>
+         Log in with Google
+       </button>
+     </div>
+
+    <div id="msg" style="color:red; min-height:1.2rem;"></div>
+
+    <div class="fieldList">
+      <a href="./r">Don’t have an account? Register</a>
+    </div>
+  </div>
+</body>
+</html>

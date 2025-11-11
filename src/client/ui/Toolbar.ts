@@ -41,6 +41,17 @@ export class Toolbar {
 
     {
       const button = document.createElement('button')
+      button.textContent = 'settings'
+      button.classList.add('material-icons')
+      button.style.alignSelf = 'flex-end'
+      button.addEventListener('click', () => {
+        window.location.href += '/settings'
+      })
+      this._root.append(button)
+    }
+
+    {
+      const button = document.createElement('button')
       button.textContent = 'arrow_back'
       button.classList.add('material-icons')
       button.style.alignSelf = 'flex-end'

@@ -1,12 +1,34 @@
 docker exec -i board-scylla cqlsh <<EOF
 
-DROP KEYSPACE $1;
+DROP KEYSPACE boardy;
 
-CREATE KEYSPACE $1 WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'datacenter1' : 1 };
-use $1;
+CREATE KEYSPACE boardy WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'datacenter1' : 1 };
+use boardy;
 
 CREATE TABLE board_updates (board uuid, timeid uuid, update_data blob, PRIMARY KEY (board, timeid));
 
-CREATE TABLE board_list (boardid uuid, name text, PRIMARY KEY (boardid));
+CREATE TABLE board_list (
+boardid uuid,
+name text, 
+setting uuid, 
+PRIMARY KEY (boardid)
+);
 
+CREATE TABLE user (
+PRIMARY KEY (user_id),
+user_id uuid,
+name text,
+email text,
+password text
+);
+
+CREATE TABLE settings (
+PRIMARY KEY (settings_id),
+settings_id uuid,
+theme boolean,
+private boolean,
+description text
+);
+
+ 
 EOF

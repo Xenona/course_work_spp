@@ -17,15 +17,22 @@ export class BoardManager {
   }
 
   async createBoard(name: string): Promise<BoardInMenu> {
-    const uuid = Bun.randomUUIDv7()
+    const uuid_board = Bun.randomUUIDv7()
+    const uuid_settings  = Bun.randomUUIDv7()
 
     await this.client.execute(
-      'INSERT INTO board_list(boardid, name) VALUES (?, ?)',
-      [uuid, name]
+      'INSERT INTO settings(settings_id, theme, private, description)'
+      + 'VALUES (?, ?, ?, ?)',
+      [uuid_settings, false, false, "My first drawing =)"]
+    )
+
+    await this.client.execute(
+      'INSERT INTO board_list(boardid, name, setting) VALUES (?, ?, ?)',
+      [uuid_board, name, uuid_settings]
     )
 
     return {
-      uuid,
+      uuid: uuid_board,
       name,
     }
   }

@@ -5,7 +5,10 @@ import cassandra from 'cassandra-driver'
 import { UpdatesSaver } from './UpdatesSaver'
 import { ServerMenu } from '../menu/server/Menu'
 import { AssetApi } from './UploadApi'
-
+import register from '@/client/auth/register.html'
+import login from '@/client/auth/login.html'
+import { UserManager } from './user/UserManager'
+import { SettingsManager } from './settings/SettingsManager'
 
 const boardU = '0196923f-16d2-7000-a809-e308a0fd11b0'
 
@@ -17,6 +20,8 @@ export class Server {
   updatesSaver: UpdatesSaver
   serverMenu: ServerMenu
   uploader: AssetApi
+  userManager: UserManager
+  settingsManager: SettingsManager
 
   constructor() {
     this.client = new cassandra.Client({
@@ -35,7 +40,10 @@ export class Server {
     this.updatesSaver = new UpdatesSaver(this.client)
     this.serverMenu = new ServerMenu(this.client)
     this.uploader = new AssetApi(this.s3)
+    this.userManager = new UserManager(this.client)
+    this.settingsManager = new SettingsManager(this.client)
   }
+
 
   async connect() {
     this.client.connect()
@@ -47,6 +55,9 @@ export class Server {
       port: 3000,
       routes: {
         '/': menuIndex,
+        "/r": register,
+        "/l": login,
+        ...this.settingsManager.getRoutes(),
         '/boards/:uuid': uiIndex,
         '/boards/:uuid/ws': async (req, server) => {
           if (server.upgrade(req, { data: { uuid: req.params.uuid } })) {
@@ -55,7 +66,8 @@ export class Server {
           return new Response('Upgrade failed', { status: 500 })
         },
         ...this.serverMenu.getRoutes(),
-        ...this.uploader.getRoutes()
+        ...this.uploader.getRoutes(),
+        ...this.userManager.getRoutes()
       },
       websocket: {
         async open(ws: ServerWebSocket<{ uuid: string }>) {

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Board Settings</title>
+
+  <!-- 1️⃣  Load the stylesheet -->
+  <link rel="stylesheet" href="./settings.css">
+
+</head>
+<body>
+  <div class="root">
+    <h1>Board Settings</h1>
+
+    <div class="formField">
+      <label for="theme">Dark Theme:</label>
+      <input id="theme" type="checkbox">
+    </div>
+
+    <div class="formField">
+      <label for="private">Private board:</label>
+      <input id="private" type="checkbox">
+    </div>
+
+    <div class="formField">
+      <label for="description">Description:</label>
+      <textarea id="description" rows="3"></textarea>
+    </div>
+
+    <div class="formField">
+      <button id="saveBtn">Save</button>
+    </div>
+
+    <div id="msg"></div>
+
+    <div class="fieldList">
+      <a id="backLink" href=".">← Back to board list</a>
+    </div>
+  </div>
+
+  <!-- 2️⃣  Load the logic as an ES‑module -->
+  <script type="module" src="./settings.ts"></script>
+</body>
+</html>
